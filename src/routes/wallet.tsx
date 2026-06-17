@@ -46,7 +46,7 @@ function WalletPage() {
       <section className="px-4 pt-4">
         <div className="relative overflow-hidden rounded-3xl bg-[image:var(--gradient-wallet)] p-5 text-primary-foreground shadow-[var(--shadow-pop)]">
           <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-indigo-400/20 blur-3xl" />
+          <div className="absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
 
           <div className="relative">
             <div className="flex items-center justify-between">
