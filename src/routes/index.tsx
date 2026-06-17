@@ -7,23 +7,72 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "LootKart — Compare Prices & Daily Loot Deals" },
-      { name: "description", content: "Compare prices instantly across Amazon, Flipkart and Myntra. Discover trending Loot Deals of the Day." },
+      {
+        name: "description",
+        content:
+          "Compare prices instantly across Amazon, Flipkart and Myntra. Discover trending Loot Deals of the Day.",
+      },
     ],
   }),
   component: Home,
 });
 
 const lootDeals = [
-  { id: "l1", tag: "Loot ₹499", title: "boAt Airdopes 141", emoji: "🎧", bg: "from-[oklch(0.55_0.22_320)] to-[oklch(0.45_0.22_285)]", off: "78% OFF" },
-  { id: "l2", tag: "Steal Deal", title: "Noise ColorFit Pro", emoji: "⌚", bg: "from-[oklch(0.55_0.20_15)] to-[oklch(0.50_0.22_340)]", off: "65% OFF" },
-  { id: "l3", tag: "Hot Drop", title: "Mi Power Bank 20K", emoji: "🔋", bg: "from-[oklch(0.55_0.18_180)] to-[oklch(0.45_0.20_260)]", off: "52% OFF" },
+  {
+    id: "l1",
+    tag: "Loot ₹499",
+    title: "boAt Airdopes 141",
+    emoji: "🎧",
+    bg: "from-[oklch(0.55_0.22_320)] to-[oklch(0.45_0.22_285)]",
+    off: "78% OFF",
+  },
+  {
+    id: "l2",
+    tag: "Steal Deal",
+    title: "Noise ColorFit Pro",
+    emoji: "⌚",
+    bg: "from-[oklch(0.55_0.20_15)] to-[oklch(0.50_0.22_340)]",
+    off: "65% OFF",
+  },
+  {
+    id: "l3",
+    tag: "Hot Drop",
+    title: "Mi Power Bank 20K",
+    emoji: "🔋",
+    bg: "from-[oklch(0.55_0.18_180)] to-[oklch(0.45_0.20_260)]",
+    off: "52% OFF",
+  },
 ];
 
 const categories = [
-  { id: "fashion", name: "Fashion", icon: Shirt, bg: "bg-[oklch(0.95_0.05_15)]", fg: "text-[oklch(0.50_0.20_15)]" },
-  { id: "electronics", name: "Electronics", icon: Smartphone, bg: "bg-[oklch(0.95_0.05_260)]", fg: "text-[oklch(0.45_0.20_260)]" },
-  { id: "beauty", name: "Beauty", icon: Sparkles, bg: "bg-[oklch(0.95_0.05_330)]", fg: "text-[oklch(0.50_0.22_330)]" },
-  { id: "home", name: "Home", icon: Sofa, bg: "bg-[oklch(0.95_0.05_150)]", fg: "text-[oklch(0.45_0.15_150)]" },
+  {
+    id: "fashion",
+    name: "Fashion",
+    icon: Shirt,
+    bg: "bg-[oklch(0.95_0.05_15)]",
+    fg: "text-[oklch(0.50_0.20_15)]",
+  },
+  {
+    id: "electronics",
+    name: "Electronics",
+    icon: Smartphone,
+    bg: "bg-[oklch(0.95_0.05_260)]",
+    fg: "text-[oklch(0.45_0.20_260)]",
+  },
+  {
+    id: "beauty",
+    name: "Beauty",
+    icon: Sparkles,
+    bg: "bg-[oklch(0.95_0.05_330)]",
+    fg: "text-[oklch(0.50_0.22_330)]",
+  },
+  {
+    id: "home",
+    name: "Home",
+    icon: Sofa,
+    bg: "bg-[oklch(0.95_0.05_150)]",
+    fg: "text-[oklch(0.45_0.15_150)]",
+  },
 ];
 
 const products: Product[] = [
@@ -112,8 +161,12 @@ function Home() {
                 <p className="text-[11px] uppercase tracking-wider opacity-80">Trending now</p>
                 <h3 className="mt-0.5 text-lg font-extrabold leading-tight">{d.title}</h3>
                 <div className="mt-1.5 flex items-center justify-between">
-                  <span className="rounded-md bg-white/15 px-2 py-0.5 text-xs font-bold">{d.off}</span>
-                  <span className="text-xs font-semibold underline underline-offset-2">Grab now →</span>
+                  <span className="rounded-md bg-white/15 px-2 py-0.5 text-xs font-bold">
+                    {d.off}
+                  </span>
+                  <span className="text-xs font-semibold underline underline-offset-2">
+                    Grab now →
+                  </span>
                 </div>
               </div>
             </article>
@@ -131,11 +184,7 @@ function Home() {
           {categories.map((c) => {
             const Icon = c.icon;
             return (
-              <button
-                key={c.id}
-                type="button"
-                className="group flex flex-col items-center gap-1.5"
-              >
+              <button key={c.id} type="button" className="group flex flex-col items-center gap-1.5">
                 <span
                   className={`grid h-16 w-16 place-items-center rounded-2xl ${c.bg} ${c.fg} transition-transform group-active:scale-95`}
                 >
