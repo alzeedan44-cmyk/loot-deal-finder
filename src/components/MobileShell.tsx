@@ -1,14 +1,26 @@
+import { Link } from "@tanstack/react-router";
+import { useRouter } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Search, Home, LayoutGrid, Wallet, Bell, MapPin } from "lucide-react";
 
 const navItems = [
-  { id: "home", label: "Home", icon: Home, active: true },
-  { id: "search", label: "Search", icon: Search, active: false },
-  { id: "categories", label: "Categories", icon: LayoutGrid, active: false },
-  { id: "wallet", label: "My Wallet", icon: Wallet, active: false },
+  { id: "home", label: "Home", icon: Home, to: "/" },
+  { id: "search", label: "Search", icon: Search },
+  { id: "categories", label: "Categories", icon: LayoutGrid },
+  { id: "wallet", label: "My Wallet", icon: Wallet, to: "/wallet" },
 ];
 
+function getActiveId(pathname: string) {
+  if (pathname.startsWith("/wallet")) return "wallet";
+  if (pathname.startsWith("/search")) return "search";
+  if (pathname.startsWith("/categories")) return "categories";
+  return "home";
+}
+
 export function MobileShell({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const activeId = getActiveId(router.state.location.pathname);
+
   return (
     <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-background">
       {/* Sticky Top */}
@@ -16,7 +28,9 @@ export function MobileShell({ children }: { children: ReactNode }) {
         <div className="flex items-center justify-between px-4 pb-3">
           <div className="flex min-w-0 items-center gap-1.5 text-xs/none opacity-90">
             <MapPin className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">Deliver to <b className="font-semibold">Mumbai 400001</b></span>
+            <span className="truncate">
+              Deliver to <b className="font-semibold">Mumbai 400001</b>
+            </span>
           </div>
           <button
             type="button"
@@ -53,23 +67,34 @@ export function MobileShell({ children }: { children: ReactNode }) {
         <ul className="grid grid-cols-4">
           {navItems.map((it) => {
             const Icon = it.icon;
-            return (
-              <li key={it.id}>
-                <button
-                  type="button"
-                  className={`flex w-full flex-col items-center gap-1 rounded-xl py-1.5 text-[11px] font-medium transition-colors ${
-                    it.active ? "text-primary" : "text-muted-foreground"
+            const isActive = it.id === activeId;
+            const className = `flex w-full flex-col items-center gap-1 rounded-xl py-1.5 text-[11px] font-medium transition-colors ${
+              isActive ? "text-primary" : "text-muted-foreground"
+            }`;
+            const content = (
+              <>
+                <span
+                  className={`grid h-9 w-9 place-items-center rounded-xl ${
+                    isActive ? "bg-primary/10" : ""
                   }`}
                 >
-                  <span
-                    className={`grid h-9 w-9 place-items-center rounded-xl ${
-                      it.active ? "bg-primary/10" : ""
-                    }`}
-                  >
-                    <Icon className="h-5 w-5" strokeWidth={it.active ? 2.4 : 2} />
-                  </span>
-                  {it.label}
-                </button>
+                  <Icon className="h-5 w-5" strokeWidth={isActive ? 2.4 : 2} />
+                </span>
+                {it.label}
+              </>
+            );
+
+            return (
+              <li key={it.id}>
+                {it.to ? (
+                  <Link to={it.to} className={className}>
+                    {content}
+                  </Link>
+                ) : (
+                  <button type="button" className={className}>
+                    {content}
+                  </button>
+                )}
               </li>
             );
           })}

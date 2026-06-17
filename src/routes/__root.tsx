@@ -79,9 +79,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#5b21b6" },
       { title: "LootKart — Compare Prices & Grab the Best Deals" },
-      { name: "description", content: "Compare prices across Amazon, Flipkart & Myntra. Find loot deals, coupons and cashback in seconds." },
+      {
+        name: "description",
+        content:
+          "Compare prices across Amazon, Flipkart & Myntra. Find loot deals, coupons and cashback in seconds.",
+      },
       { property: "og:title", content: "LootKart — Compare Prices & Grab the Best Deals" },
-      { property: "og:description", content: "Compare prices across Amazon, Flipkart & Myntra. Find loot deals, coupons and cashback in seconds." },
+      {
+        property: "og:description",
+        content:
+          "Compare prices across Amazon, Flipkart & Myntra. Find loot deals, coupons and cashback in seconds.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

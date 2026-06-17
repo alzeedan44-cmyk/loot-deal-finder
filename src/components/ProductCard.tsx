@@ -12,8 +12,7 @@ export type Product = {
   offers: Offer[];
 };
 
-const inr = (n: number) =>
-  "₹" + n.toLocaleString("en-IN");
+const inr = (n: number) => "₹" + n.toLocaleString("en-IN");
 
 export function ProductCard({ product }: { product: Product }) {
   const best = product.offers.reduce((a, b) => (a.price < b.price ? a : b));
@@ -21,7 +20,11 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-      <Link to="/product/$id" params={{ id: product.id }} className="flex gap-3 p-3 active:bg-muted/40">
+      <Link
+        to="/product/$id"
+        params={{ id: product.id }}
+        className="flex gap-3 p-3 active:bg-muted/40"
+      >
         <div
           className={`grid h-24 w-24 shrink-0 place-items-center rounded-xl text-4xl ${product.bg}`}
           aria-hidden
@@ -69,7 +72,9 @@ export function ProductCard({ product }: { product: Product }) {
           type="button"
           className="group relative h-11 w-full overflow-hidden rounded-xl bg-[image:var(--gradient-primary)] text-sm font-bold text-primary-foreground shadow-[var(--shadow-pop)] transition-transform active:scale-[0.98]"
         >
-          <span className="relative z-10">Buy Best Deal on {best.store[0].toUpperCase() + best.store.slice(1)} →</span>
+          <span className="relative z-10">
+            Buy Best Deal on {best.store[0].toUpperCase() + best.store.slice(1)} →
+          </span>
         </button>
       </div>
     </article>
