@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { StoreLogo, type Store } from "./StoreLogo";
 
 export type Offer = { store: Store; price: number };
