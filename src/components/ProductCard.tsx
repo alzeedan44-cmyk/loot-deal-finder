@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { StoreLogo, type Store } from "./StoreLogo";
 
 export type Offer = { store: Store; price: number };
@@ -20,7 +21,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-      <div className="flex gap-3 p-3">
+      <Link to="/product/$id" params={{ id: product.id }} className="flex gap-3 p-3 active:bg-muted/40">
         <div
           className={`grid h-24 w-24 shrink-0 place-items-center rounded-xl text-4xl ${product.bg}`}
           aria-hidden
@@ -42,7 +43,7 @@ export function ProductCard({ product }: { product: Product }) {
             Best on <span className="font-semibold capitalize text-foreground">{best.store}</span>
           </p>
         </div>
-      </div>
+      </Link>
 
       <div className="grid grid-cols-3 gap-1 border-t border-border bg-muted/40 px-2 py-2">
         {product.offers.map((o) => {
