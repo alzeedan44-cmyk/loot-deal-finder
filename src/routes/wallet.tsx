@@ -29,14 +29,43 @@ export const Route = createFileRoute("/wallet")({
 });
 
 const quickActions = [
-  { id: "withdraw", label: "Withdraw to UPI", icon: ArrowUpRight, gradient: "bg-[image:var(--gradient-primary)]" },
-  { id: "redeem", label: "Redeem Gift Cards", icon: Gift, gradient: "bg-[image:var(--gradient-loot)]" },
-  { id: "history", label: "Transaction History", icon: History, gradient: "bg-secondary text-secondary-foreground" },
+  {
+    id: "withdraw",
+    label: "Withdraw to UPI",
+    icon: ArrowUpRight,
+    gradient: "bg-[image:var(--gradient-primary)]",
+  },
+  {
+    id: "redeem",
+    label: "Redeem Gift Cards",
+    icon: Gift,
+    gradient: "bg-[image:var(--gradient-loot)]",
+  },
+  {
+    id: "history",
+    label: "Transaction History",
+    icon: History,
+    gradient: "bg-secondary text-secondary-foreground",
+  },
 ];
 
 const recentActivity = [
-  { id: "a1", title: "Cashback from iPhone 15 deal", coins: 0, rupees: 0, date: "Today", status: "pending" },
-  { id: "a2", title: "Welcome bonus credited", coins: 0, rupees: 0, date: "Yesterday", status: "completed" },
+  {
+    id: "a1",
+    title: "Cashback from iPhone 15 deal",
+    coins: 0,
+    rupees: 0,
+    date: "Today",
+    status: "pending",
+  },
+  {
+    id: "a2",
+    title: "Welcome bonus credited",
+    coins: 0,
+    rupees: 0,
+    date: "Yesterday",
+    status: "completed",
+  },
 ];
 
 function WalletPage() {

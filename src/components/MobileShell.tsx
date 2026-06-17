@@ -28,7 +28,9 @@ export function MobileShell({ children }: { children: ReactNode }) {
         <div className="flex items-center justify-between px-4 pb-3">
           <div className="flex min-w-0 items-center gap-1.5 text-xs/none opacity-90">
             <MapPin className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">Deliver to <b className="font-semibold">Mumbai 400001</b></span>
+            <span className="truncate">
+              Deliver to <b className="font-semibold">Mumbai 400001</b>
+            </span>
           </div>
           <button
             type="button"
