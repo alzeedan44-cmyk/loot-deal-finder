@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { WalletProvider } from "../lib/wallet-store";
 
 function NotFoundComponent() {
   return (
@@ -78,13 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#5b21b6" },
-      { title: "LootKart — Compare Prices & Grab the Best Deals" },
+      { title: "NeoCart — Compare Prices & Grab the Best Deals" },
       {
         name: "description",
         content:
-          "Compare prices across Amazon, Flipkart & Myntra. Find loot deals, coupons and cashback in seconds.",
+          "NeoCart compares live prices across Amazon, Flipkart & Myntra. Earn NeoCoins cashback on every order.",
       },
-      { property: "og:title", content: "LootKart — Compare Prices & Grab the Best Deals" },
+      { property: "og:title", content: "NeoCart — Compare Prices & Grab the Best Deals" },
       {
         property: "og:description",
         content:
@@ -128,8 +129,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <WalletProvider>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </WalletProvider>
     </QueryClientProvider>
   );
 }
