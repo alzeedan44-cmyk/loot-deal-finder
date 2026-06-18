@@ -5,7 +5,7 @@ import { Search, Home, LayoutGrid, Wallet, Bell, MapPin } from "lucide-react";
 
 const navItems = [
   { id: "home", label: "Home", icon: Home, to: "/" },
-  { id: "search", label: "Search", icon: Search },
+  { id: "search", label: "Search", icon: Search, to: "/search" },
   { id: "categories", label: "Categories", icon: LayoutGrid },
   { id: "wallet", label: "My Wallet", icon: Wallet, to: "/wallet" },
 ];
