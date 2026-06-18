@@ -25,13 +25,24 @@ export function MobileShell({ children }: { children: ReactNode }) {
     <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-background">
       {/* Sticky Top */}
       <header className="sticky top-0 z-30 bg-[image:var(--gradient-primary)] pb-3 pt-[max(env(safe-area-inset-top),12px)] text-primary-foreground">
-        <div className="flex items-center justify-between px-4 pb-3">
-          <div className="flex min-w-0 items-center gap-1.5 text-xs/none opacity-90">
-            <MapPin className="h-3.5 w-3.5 shrink-0" />
-            <span className="truncate">
-              Deliver to <b className="font-semibold">Mumbai 400001</b>
+        <div className="flex items-center justify-between px-4 pb-2">
+          <Link to="/" className="flex items-center gap-2">
+            <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/15 font-display text-base font-extrabold tracking-tighter">
+              N
             </span>
-          </div>
+            <span className="flex items-center gap-1.5">
+              <span className="font-display text-[19px] font-extrabold leading-none tracking-tight">
+                NeoCart
+              </span>
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inset-0 animate-ping rounded-full bg-[oklch(0.85_0.25_145)] opacity-75" />
+                <span className="relative h-2 w-2 rounded-full bg-[oklch(0.78_0.25_145)] shadow-[0_0_8px_oklch(0.78_0.25_145)]" />
+              </span>
+              <span className="text-[9px] font-bold uppercase tracking-wider opacity-80">
+                Live Price Engine
+              </span>
+            </span>
+          </Link>
           <button
             type="button"
             aria-label="Notifications"
@@ -40,6 +51,13 @@ export function MobileShell({ children }: { children: ReactNode }) {
             <Bell className="h-4 w-4" />
             <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[oklch(0.78_0.18_75)]" />
           </button>
+        </div>
+
+        <div className="flex items-center gap-1.5 px-4 pb-2 text-[11px] opacity-90">
+          <MapPin className="h-3 w-3 shrink-0" />
+          <span className="truncate">
+            Deliver to <b className="font-semibold">Mumbai 400001</b>
+          </span>
         </div>
 
         <div className="px-4">
