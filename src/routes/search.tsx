@@ -67,7 +67,7 @@ const STORES: { id: Store; label: string }[] = [
 ];
 
 function SearchPage() {
-  const search = Route.useSearch();
+  const search = Route.useSearch() as SearchParams;
   const navigate = Route.useNavigate();
 
   const [query, setQuery] = useState(search.q ?? "");
@@ -98,7 +98,7 @@ function SearchPage() {
   };
 
   const clearCategory = () =>
-    navigate({ search: (prev) => ({ ...prev, category: undefined }), replace: true });
+    navigate({ search: (prev: SearchParams) => ({ ...prev, category: undefined }), replace: true });
 
   return (
     <MobileShell>
