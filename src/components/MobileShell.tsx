@@ -4,10 +4,10 @@ import type { ReactNode } from "react";
 import { Search, Home, LayoutGrid, Wallet, Bell, MapPin } from "lucide-react";
 
 const navItems = [
-  { id: "home", label: "Home", icon: Home, to: "/" },
-  { id: "search", label: "Search", icon: Search, to: "/search" },
-  { id: "categories", label: "Categories", icon: LayoutGrid },
-  { id: "wallet", label: "My Wallet", icon: Wallet, to: "/wallet" },
+  { id: "home", label: "Home", icon: Home, to: "/" as const },
+  { id: "search", label: "Search", icon: Search, to: "/search" as const },
+  { id: "categories", label: "Categories", icon: LayoutGrid, to: "/categories" as const },
+  { id: "wallet", label: "My Wallet", icon: Wallet, to: "/wallet" as const },
 ];
 
 function getActiveId(pathname: string) {
@@ -104,15 +104,9 @@ export function MobileShell({ children }: { children: ReactNode }) {
 
             return (
               <li key={it.id}>
-                {it.to ? (
-                  <Link to={it.to} className={className}>
-                    {content}
-                  </Link>
-                ) : (
-                  <button type="button" className={className}>
-                    {content}
-                  </button>
-                )}
+                <Link to={it.to} className={className}>
+                  {content}
+                </Link>
               </li>
             );
           })}
