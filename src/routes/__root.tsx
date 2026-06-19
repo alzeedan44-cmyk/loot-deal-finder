@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { WalletProvider } from "../lib/wallet-store";
+import { WebViewProvider } from "../lib/webview-store";
 
 function NotFoundComponent() {
   return (
@@ -130,8 +131,10 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <WalletProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+        <WebViewProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </WebViewProvider>
       </WalletProvider>
     </QueryClientProvider>
   );
