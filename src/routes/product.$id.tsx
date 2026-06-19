@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info } from "lucide-react";
 import { StoreLogo } from "@/components/StoreLogo";
 import { getProduct } from "@/data/products";
+import { useWebView } from "@/lib/webview-store";
 
 export const Route = createFileRoute("/product/$id")({
   head: ({ params }) => {
@@ -40,6 +41,7 @@ const rankTone = [
 
 function ProductView() {
   const { product } = Route.useLoaderData();
+  const { open: openWebView } = useWebView();
   const [alert, setAlert] = useState(false);
   const [active, setActive] = useState(0);
 
@@ -220,6 +222,9 @@ function ProductView() {
                 </span>
                 <button
                   type="button"
+                  onClick={() =>
+                    openWebView({ store: o.store, title: product.title, price: o.price })
+                  }
                   className={`rounded-lg px-3 py-1.5 text-[11px] font-bold active:scale-95 ${
                     i === 0
                       ? "bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-pop)]"
@@ -273,6 +278,9 @@ function ProductView() {
           </div>
           <button
             type="button"
+            onClick={() =>
+              openWebView({ store: best.store, title: product.title, price: best.price })
+            }
             className="ml-auto h-12 flex-1 rounded-xl bg-[image:var(--gradient-primary)] text-sm font-bold text-primary-foreground shadow-[var(--shadow-pop)] active:scale-[0.98]"
           >
             Buy Best Deal →

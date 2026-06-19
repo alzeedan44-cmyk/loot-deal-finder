@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { StoreLogo, type Store } from "./StoreLogo";
+import { useWebView } from "@/lib/webview-store";
 
 export type Offer = { store: Store; price: number };
 
@@ -17,6 +18,7 @@ const inr = (n: number) => "₹" + n.toLocaleString("en-IN");
 export function ProductCard({ product }: { product: Product }) {
   const best = product.offers.reduce((a, b) => (a.price < b.price ? a : b));
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
+  const { open } = useWebView();
 
   return (
     <article className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
@@ -70,6 +72,9 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="p-3 pt-2">
         <button
           type="button"
+          onClick={() =>
+            open({ store: best.store, title: product.title, price: best.price })
+          }
           className="group relative h-11 w-full overflow-hidden rounded-xl bg-[image:var(--gradient-primary)] text-sm font-bold text-primary-foreground shadow-[var(--shadow-pop)] transition-transform active:scale-[0.98]"
         >
           <span className="relative z-10">
