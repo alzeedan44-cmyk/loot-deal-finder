@@ -35,9 +35,14 @@ export function ProductCard({ product }: { product: Product }) {
           {product.emoji}
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
-          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-foreground">
-            {product.title}
-          </h3>
+          <div className="flex items-start gap-2">
+            <h3 className="line-clamp-2 flex-1 text-sm font-semibold leading-snug text-foreground">
+              {product.title}
+            </h3>
+            <div onClick={(e) => e.preventDefault()} className="-mr-1 -mt-1">
+              <PriceAlertBell productId={product.id} productTitle={product.title} />
+            </div>
+          </div>
           <div className="mt-1 flex items-baseline gap-2">
             <span className="text-lg font-extrabold text-foreground">{inr(best.price)}</span>
             <span className="text-xs text-muted-foreground line-through">{inr(product.mrp)}</span>

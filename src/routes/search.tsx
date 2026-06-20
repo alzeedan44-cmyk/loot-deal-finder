@@ -19,6 +19,7 @@ import { MobileShell } from "@/components/MobileShell";
 import { StoreLogo, type Store } from "@/components/StoreLogo";
 import { products, categoryMeta, type CategoryId } from "@/data/products";
 import { cn } from "@/lib/utils";
+import { PriceAlertBell } from "@/lib/price-alert-store";
 
 type SearchParams = {
   q?: string;
@@ -334,8 +335,11 @@ function SearchPage() {
               return (
                 <article
                   key={p.id}
-                  className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+                  className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
                 >
+                  <div className="absolute right-2 top-2 z-10">
+                    <PriceAlertBell productId={p.id} productTitle={p.title} />
+                  </div>
                   <Link
                     to="/product/$id"
                     params={{ id: p.id }}
@@ -351,7 +355,7 @@ function SearchPage() {
                       {p.emoji}
                     </div>
                     <div className="px-3 pb-2 pt-2.5">
-                      <h3 className="line-clamp-2 min-h-[34px] text-[13px] font-bold leading-snug text-foreground">
+                      <h3 className="line-clamp-2 min-h-[34px] pr-8 text-[13px] font-bold leading-snug text-foreground">
                         {p.title}
                       </h3>
                       <p className="mt-0.5 text-[11px] text-muted-foreground">
