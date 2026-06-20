@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { StoreLogo, type Store } from "./StoreLogo";
 import { useWebView } from "@/lib/webview-store";
+import { PriceAlertBell } from "@/lib/price-alert-store";
 
 export type Offer = { store: Store; price: number };
 
