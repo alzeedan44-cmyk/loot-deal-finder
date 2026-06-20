@@ -18,6 +18,7 @@ type WalletState = {
   nextTierAt: number;
   transactions: Transaction[];
   addWithdrawal: (amount: number, upi: string) => void;
+  credit: (amount: number, title: string, store: TxStore) => void;
 };
 
 const defaultTx: Transaction[] = [
@@ -68,6 +69,21 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     ]);
   }, []);
 
+  const credit = useCallback((amount: number, title: string, store: TxStore) => {
+    setBalance((b) => b + amount);
+    setTransactions((tx) => [
+      {
+        id: `c${Date.now()}`,
+        title,
+        store,
+        coins: amount,
+        timestamp: "Just now",
+        status: "pending",
+      },
+      ...tx,
+    ]);
+  }, []);
+
   const value = useMemo<WalletState>(
     () => ({
       balance,
@@ -75,8 +91,9 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       nextTierAt: 200,
       transactions,
       addWithdrawal,
+      credit,
     }),
-    [balance, transactions, addWithdrawal],
+    [balance, transactions, addWithdrawal, credit],
   );
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;

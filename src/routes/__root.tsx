@@ -13,6 +13,8 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { WalletProvider } from "../lib/wallet-store";
 import { WebViewProvider } from "../lib/webview-store";
+import { PriceAlertProvider } from "../lib/price-alert-store";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -132,8 +134,11 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <WalletProvider>
         <WebViewProvider>
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
+          <PriceAlertProvider>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+            <Toaster position="top-center" />
+          </PriceAlertProvider>
         </WebViewProvider>
       </WalletProvider>
     </QueryClientProvider>
