@@ -172,7 +172,6 @@ export const products: Product[] = [
 
 export const getProduct = (id: string) => products.find((p) => p.id === id);
 
-import type { Store } from "@/components/StoreLogo";
 
 export type ExtendedOffer = {
   store: Store;
