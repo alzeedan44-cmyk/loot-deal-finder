@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint } from "lucide-react";
+import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint, Wallet, BadgeCheck, ChevronRight, Settings } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -31,7 +31,13 @@ function AccountPage() {
           <ShieldCheck className="h-3.5 w-3.5 text-[oklch(0.82_0.18_295)]" />
           Account & Security
         </p>
-        <span className="h-10 w-10" />
+        <Link
+          to="/admin"
+          aria-label="Admin Control Panel"
+          className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white/70 active:scale-95 hover:text-white"
+        >
+          <Settings className="h-5 w-5" />
+        </Link>
       </header>
 
       <main className="relative flex-1 px-5 pb-12 pt-2">
@@ -52,6 +58,55 @@ function AccountPage() {
               <p className="text-[12px] text-[oklch(0.78_0.02_270)]">
                 Sign in to sync NeoCoins across devices
               </p>
+            </div>
+          </div>
+
+          {/* Card */}
+          {/* Member Status Dashboard Card (simulated signed-in) */}
+          <div className="mt-5 relative overflow-hidden rounded-3xl border border-white/10 bg-[image:linear-gradient(135deg,oklch(0.30_0.10_285),oklch(0.24_0.08_265))] p-5 shadow-[0_20px_60px_-20px_oklch(0.55_0.25_290/60%)]">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[oklch(0.62_0.24_295)]/30 blur-3xl" />
+            <div className="relative">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur">
+                  <BadgeCheck className="h-3 w-3 text-[oklch(0.85_0.20_150)]" />
+                  Member Status
+                </span>
+                <span className="rounded-full bg-[oklch(0.85_0.20_150)]/20 px-2 py-1 text-[9px] font-extrabold uppercase tracking-wider text-[oklch(0.85_0.20_150)]">
+                  ● Active
+                </span>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-white/60">
+                  Account Holder Status
+                </p>
+                <p className="mt-0.5 font-display text-lg font-extrabold text-white">
+                  Verified Standard Member
+                </p>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-3 py-2">
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-white/50">
+                    Security ID
+                  </p>
+                  <p className="font-mono text-[13px] font-extrabold tracking-wide text-white">
+                    NC-99824-IND
+                  </p>
+                </div>
+                <ShieldCheck className="h-5 w-5 text-[oklch(0.82_0.18_295)]" />
+              </div>
+
+              <Link
+                to="/wallet"
+                className="mt-4 flex h-11 w-full items-center justify-between rounded-xl bg-white/10 px-4 text-[13px] font-extrabold text-white backdrop-blur transition-colors hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4" />
+                  Open My Wallet Ledger
+                </span>
+                <ChevronRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
 
