@@ -194,6 +194,9 @@ function AdminPanel() {
           })}
         </div>
 
+        <BroadcastForm />
+
+
         <p className="mt-8 text-center text-[9px] uppercase tracking-[0.25em] text-[oklch(0.50_0.01_250)]">
           Restricted — Authorized Personnel Only
         </p>
