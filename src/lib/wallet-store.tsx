@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
 export type TxStatus = "pending" | "approved" | "withdrawal";
-export type TxStore = "amazon" | "flipkart" | "myntra" | "upi";
+export type TxStore = "amazon" | "flipkart" | "myntra" | "ajio" | "nykaa" | "tatacliq" | "upi";
 
 export type Transaction = {
   id: string;
