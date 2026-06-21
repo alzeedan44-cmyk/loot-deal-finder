@@ -32,7 +32,7 @@ export const Route = createFileRoute("/product/$id")({
 });
 
 const inr = (n: number) => "₹" + n.toLocaleString("en-IN");
-const rankSuffix = ["Lowest", "Mid", "Highest"];
+
 const rankTone = [
   "bg-success/10 text-success ring-success/30",
   "bg-warning/15 text-warning-foreground ring-warning/40",
