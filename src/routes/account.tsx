@@ -62,6 +62,55 @@ function AccountPage() {
           </div>
 
           {/* Card */}
+          {/* Member Status Dashboard Card (simulated signed-in) */}
+          <div className="mt-5 relative overflow-hidden rounded-3xl border border-white/10 bg-[image:linear-gradient(135deg,oklch(0.30_0.10_285),oklch(0.24_0.08_265))] p-5 shadow-[0_20px_60px_-20px_oklch(0.55_0.25_290/60%)]">
+            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[oklch(0.62_0.24_295)]/30 blur-3xl" />
+            <div className="relative">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-white backdrop-blur">
+                  <BadgeCheck className="h-3 w-3 text-[oklch(0.85_0.20_150)]" />
+                  Member Status
+                </span>
+                <span className="rounded-full bg-[oklch(0.85_0.20_150)]/20 px-2 py-1 text-[9px] font-extrabold uppercase tracking-wider text-[oklch(0.85_0.20_150)]">
+                  ● Active
+                </span>
+              </div>
+
+              <div className="mt-4">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-white/60">
+                  Account Holder Status
+                </p>
+                <p className="mt-0.5 font-display text-lg font-extrabold text-white">
+                  Verified Standard Member
+                </p>
+              </div>
+
+              <div className="mt-3 flex items-center justify-between rounded-xl border border-white/10 bg-black/20 px-3 py-2">
+                <div>
+                  <p className="text-[9px] font-bold uppercase tracking-wider text-white/50">
+                    Security ID
+                  </p>
+                  <p className="font-mono text-[13px] font-extrabold tracking-wide text-white">
+                    NC-99824-IND
+                  </p>
+                </div>
+                <ShieldCheck className="h-5 w-5 text-[oklch(0.82_0.18_295)]" />
+              </div>
+
+              <Link
+                to="/wallet"
+                className="mt-4 flex h-11 w-full items-center justify-between rounded-xl bg-white/10 px-4 text-[13px] font-extrabold text-white backdrop-blur transition-colors hover:bg-white/15 active:scale-[0.98]"
+              >
+                <span className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4" />
+                  Open My Wallet Ledger
+                </span>
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Card */}
           <div className="mt-6 rounded-3xl border border-white/10 bg-[oklch(0.22_0.05_270)] p-5 shadow-[0_20px_60px_-20px_oklch(0_0_0/60%)]">
             <div className="flex items-center justify-between">
               <p className="text-[12px] font-extrabold uppercase tracking-wider text-white">
