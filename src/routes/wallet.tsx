@@ -472,3 +472,167 @@ function WithdrawSheet({
     </Sheet>
   );
 }
+
+function ReferEarnCard() {
+  const code = "NEOPROFIT50";
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
+      // ignore
+    }
+    setCopied(true);
+    toast.success("Referral code copied!", {
+      description: `Share ${code} with friends and earn 50 NeoCoins each.`,
+    });
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleShare = async (channel: "whatsapp" | "telegram" | "more") => {
+    const text = `Join me on NeoCart! Use code ${code} on your first Amazon/Myntra purchase — we both get 50 free NeoCoins (₹50). Download: https://neocart.app`;
+    if (channel === "more" && typeof navigator !== "undefined" && "share" in navigator) {
+      try {
+        await (navigator as Navigator & { share: (d: ShareData) => Promise<void> }).share({
+          title: "NeoCart Referral",
+          text,
+          url: "https://neocart.app",
+        });
+        return;
+      } catch {
+        // fall through to toast
+      }
+    }
+    if (channel === "whatsapp") {
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+    } else if (channel === "telegram") {
+      window.open(
+        `https://t.me/share/url?url=${encodeURIComponent("https://neocart.app")}&text=${encodeURIComponent(text)}`,
+        "_blank",
+        "noopener",
+      );
+    }
+    toast("Generating your unique NeoCart download link...", {
+      description: "We'll personalise the invite to track your bonus.",
+    });
+  };
+
+  return (
+    <section className="px-4 pt-5">
+      <div className="relative overflow-hidden rounded-3xl border border-[oklch(0.55_0.25_290)]/30 bg-[image:linear-gradient(140deg,oklch(0.22_0.08_280),oklch(0.18_0.06_265))] p-5 text-white shadow-[var(--shadow-pop)]">
+        <div className="pointer-events-none absolute -right-10 -top-12 h-44 w-44 rounded-full bg-[oklch(0.62_0.24_295)]/30 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -left-10 h-44 w-44 rounded-full bg-[oklch(0.55_0.25_260)]/25 blur-3xl" />
+
+        <div className="relative">
+          <div className="flex items-center gap-2">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-white/10 text-[oklch(0.85_0.18_295)] backdrop-blur">
+              <Users className="h-4 w-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-display text-base font-extrabold leading-tight">
+                Invite Friends, Double Your Bachat!
+              </h3>
+            </div>
+            <span className="rounded-full bg-[oklch(0.85_0.20_150)]/20 px-2 py-1 text-[9px] font-extrabold uppercase tracking-wider text-[oklch(0.85_0.20_150)]">
+              +50 NC
+            </span>
+          </div>
+
+          <p className="mt-2.5 text-[12px] leading-relaxed text-white/75">
+            Share your unique NeoCart referral code with friends. When they complete their
+            first purchase from <b className="text-white">Amazon</b> or{" "}
+            <b className="text-white">Myntra</b> through NeoCart, you both instantly receive{" "}
+            <b className="text-[oklch(0.88_0.18_150)]">50 free NeoCoins (₹50)</b> directly into
+            your available balance!
+          </p>
+
+          {/* Code + Copy */}
+          <div className="mt-4 flex items-stretch gap-2">
+            <div className="flex flex-1 items-center justify-between rounded-xl border-2 border-dashed border-white/25 bg-black/25 px-3.5 py-3">
+              <div>
+                <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-white/50">
+                  Your Code
+                </p>
+                <p className="font-mono text-base font-extrabold tracking-[0.18em] text-white">
+                  {code}
+                </p>
+              </div>
+              <Sparkles className="h-4 w-4 text-[oklch(0.85_0.18_295)]" />
+            </div>
+            <button
+              type="button"
+              onClick={handleCopy}
+              className={cn(
+                "flex shrink-0 items-center gap-1.5 rounded-xl px-4 text-[12px] font-extrabold transition-all active:scale-95",
+                copied
+                  ? "bg-[oklch(0.65_0.18_150)] text-white"
+                  : "bg-white text-[oklch(0.20_0.06_270)] hover:bg-white/90",
+              )}
+            >
+              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? "Copied!" : "Copy Link"}
+            </button>
+          </div>
+
+          {/* Share row */}
+          <div className="mt-4 flex items-center justify-around gap-2">
+            <ShareBtn label="WhatsApp" onClick={() => handleShare("whatsapp")} tint="oklch(0.70_0.18_150)">
+              <WhatsAppIcon />
+            </ShareBtn>
+            <ShareBtn label="Telegram" onClick={() => handleShare("telegram")} tint="oklch(0.65_0.18_240)">
+              <TelegramIcon />
+            </ShareBtn>
+            <ShareBtn label="More" onClick={() => handleShare("more")} tint="oklch(0.62_0.24_295)">
+              <MoreHorizontal className="h-5 w-5" />
+            </ShareBtn>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ShareBtn({
+  children,
+  label,
+  onClick,
+  tint,
+}: {
+  children: React.ReactNode;
+  label: string;
+  onClick: () => void;
+  tint: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="group flex flex-1 flex-col items-center gap-1.5 active:scale-95"
+    >
+      <span
+        className="grid h-12 w-12 place-items-center rounded-full border border-white/10 bg-white/5 text-white shadow-inner transition-colors group-hover:bg-white/10"
+        style={{ boxShadow: `0 8px 24px -10px ${tint}` }}
+      >
+        {children}
+      </span>
+      <span className="text-[10px] font-bold text-white/70">{label}</span>
+    </button>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+      <path d="M19.05 4.93A10 10 0 0 0 2.1 16.55L1 22l5.6-1.46A10 10 0 1 0 19.05 4.93Zm-7.04 15.4a8.3 8.3 0 0 1-4.23-1.16l-.3-.18-3.32.87.88-3.24-.2-.32a8.32 8.32 0 1 1 7.17 4.03Zm4.58-6.23c-.25-.13-1.48-.73-1.7-.81-.23-.08-.4-.13-.56.13-.17.25-.65.81-.8.98-.14.17-.3.18-.55.06-.25-.13-1.05-.39-2-1.23a7.5 7.5 0 0 1-1.4-1.73c-.14-.25 0-.38.11-.5.11-.11.25-.3.37-.44.13-.14.17-.25.25-.42.08-.16.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.42h-.48a.92.92 0 0 0-.67.31c-.23.25-.88.86-.88 2.1 0 1.24.9 2.43 1.03 2.6.13.16 1.78 2.7 4.31 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.48-.6 1.69-1.19.2-.59.2-1.09.14-1.19-.06-.1-.22-.16-.47-.29Z" />
+    </svg>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+      <path d="M9.78 15.27 9.6 19a.65.65 0 0 0 1.04.42l2.34-2.13 4.86 3.56c.9.5 1.54.24 1.76-.83l3.2-15.04c.3-1.34-.49-1.86-1.36-1.54L1.74 9.74c-1.31.5-1.29 1.23-.22 1.56l5.06 1.58 11.74-7.4c.55-.32 1.05-.14.64.21L9.78 15.27Z" />
+    </svg>
+  );
+}
