@@ -1,8 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info } from "lucide-react";
+import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info, Star } from "lucide-react";
 import { StoreLogo } from "@/components/StoreLogo";
-import { getProduct } from "@/data/products";
+import { getProduct, extendedOffers } from "@/data/products";
 import { useWebView } from "@/lib/webview-store";
 
 export const Route = createFileRoute("/product/$id")({
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/product/$id")({
 });
 
 const inr = (n: number) => "₹" + n.toLocaleString("en-IN");
-const rankSuffix = ["Lowest", "Mid", "Highest"];
+
 const rankTone = [
   "bg-success/10 text-success ring-success/30",
   "bg-warning/15 text-warning-foreground ring-warning/40",
@@ -45,7 +45,7 @@ function ProductView() {
   const [alert, setAlert] = useState(false);
   const [active, setActive] = useState(0);
 
-  const ranked = [...product.offers].sort((a, b) => a.price - b.price);
+  const ranked = extendedOffers(product).sort((a, b) => a.price - b.price);
   const best = ranked[0];
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
 
@@ -185,54 +185,70 @@ function ProductView() {
         </header>
 
         <div className="overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="grid grid-cols-[28px_1fr_auto_auto] gap-x-3 border-b border-border bg-muted/40 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+          <div className="grid grid-cols-[24px_1fr_auto] gap-x-2 border-b border-border bg-muted/40 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
             <span>#</span>
-            <span>Store</span>
+            <span>Store · Rating · Delivery</span>
             <span className="text-right">Price</span>
-            <span className="text-right">Action</span>
           </div>
           {ranked.map((o, i) => {
             const diff = o.price - best.price;
             return (
               <div
                 key={o.store}
-                className={`grid grid-cols-[28px_1fr_auto_auto] items-center gap-x-3 px-3 py-3 ${
+                className={`grid grid-cols-[24px_1fr_auto] items-center gap-x-2 px-3 py-3 ${
                   i === 0 ? "bg-success/5" : ""
                 } ${i < ranked.length - 1 ? "border-b border-border" : ""}`}
               >
                 <span
-                  className={`grid h-6 w-6 place-items-center rounded-full text-[11px] font-extrabold ring-1 ${rankTone[i]}`}
+                  className={`grid h-6 w-6 place-items-center rounded-full text-[11px] font-extrabold ring-1 ${rankTone[Math.min(i, 2)]}`}
                 >
                   {i + 1}
                 </span>
                 <div className="flex min-w-0 flex-col gap-1">
-                  <StoreLogo store={o.store} />
-                  <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    {rankSuffix[i]}
-                    {i === 0 && " · Best deal"}
-                    {i > 0 && ` · +${inr(diff)}`}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <StoreLogo store={o.store} />
+                    <span className="inline-flex items-center gap-0.5 rounded bg-[oklch(0.97_0.05_85)] px-1 py-px text-[10px] font-bold text-[oklch(0.45_0.15_75)]">
+                      <Star className="h-2.5 w-2.5 fill-current" />
+                      {o.rating}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground tabular-nums">
+                      ({o.ratings.toLocaleString("en-IN")})
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Truck className="h-2.5 w-2.5" />
+                      {o.eta}
+                    </span>
+                    {i === 0 ? (
+                      <span className="font-bold text-success">Best deal</span>
+                    ) : (
+                      <span>+{inr(diff)}</span>
+                    )}
+                  </div>
                 </div>
-                <span
-                  className={`text-right text-base font-extrabold tabular-nums ${
-                    i === 0 ? "text-success" : "text-foreground"
-                  }`}
-                >
-                  {inr(o.price)}
-                </span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    openWebView({ store: o.store, title: product.title, price: o.price })
-                  }
-                  className={`rounded-lg px-3 py-1.5 text-[11px] font-bold active:scale-95 ${
-                    i === 0
-                      ? "bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-pop)]"
-                      : "bg-muted text-foreground"
-                  }`}
-                >
-                  Buy
-                </button>
+                <div className="flex flex-col items-end gap-1.5">
+                  <span
+                    className={`text-base font-extrabold tabular-nums ${
+                      i === 0 ? "text-success" : "text-foreground"
+                    }`}
+                  >
+                    {inr(o.price)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openWebView({ store: o.store, title: product.title, price: o.price })
+                    }
+                    className={`rounded-lg px-3 py-1 text-[11px] font-bold active:scale-95 ${
+                      i === 0
+                        ? "bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-pop)]"
+                        : "bg-muted text-foreground"
+                    }`}
+                  >
+                    Buy
+                  </button>
+                </div>
               </div>
             );
           })}

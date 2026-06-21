@@ -20,12 +20,18 @@ const storeLabel: Record<Store, string> = {
   amazon: "Amazon",
   flipkart: "Flipkart",
   myntra: "Myntra",
+  ajio: "AJIO",
+  nykaa: "Nykaa",
+  tatacliq: "Tata CLiQ",
 };
 
 const storeHost: Record<Store, string> = {
   amazon: "amazon.in",
   flipkart: "flipkart.com",
   myntra: "myntra.com",
+  ajio: "ajio.com",
+  nykaa: "nykaa.com",
+  tatacliq: "tatacliq.com",
 };
 
 const storeTheme: Record<Store, { bar: string; accent: string }> = {
@@ -40,6 +46,18 @@ const storeTheme: Record<Store, { bar: string; accent: string }> = {
   myntra: {
     bar: "bg-[oklch(0.28_0.10_15)] text-white",
     accent: "text-[oklch(0.78_0.18_15)]",
+  },
+  ajio: {
+    bar: "bg-[oklch(0.22_0.02_30)] text-white",
+    accent: "text-[oklch(0.80_0.12_60)]",
+  },
+  nykaa: {
+    bar: "bg-[oklch(0.30_0.14_350)] text-white",
+    accent: "text-[oklch(0.85_0.16_350)]",
+  },
+  tatacliq: {
+    bar: "bg-[oklch(0.28_0.12_280)] text-white",
+    accent: "text-[oklch(0.82_0.15_290)]",
   },
 };
 

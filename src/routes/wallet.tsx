@@ -71,6 +71,12 @@ function storeBadge(store: Transaction["store"]) {
       return { label: "a", cls: "bg-[oklch(0.97_0.04_80)] text-[oklch(0.45_0.14_60)]" };
     case "flipkart":
       return { label: "F", cls: "bg-[oklch(0.95_0.04_250)] text-[oklch(0.40_0.18_250)]" };
+    case "ajio":
+      return { label: "AJ", cls: "bg-[oklch(0.95_0.02_30)] text-[oklch(0.30_0.04_30)]" };
+    case "nykaa":
+      return { label: "N", cls: "bg-[oklch(0.95_0.05_350)] text-[oklch(0.45_0.20_350)]" };
+    case "tatacliq":
+      return { label: "T", cls: "bg-[oklch(0.95_0.04_280)] text-[oklch(0.38_0.18_280)]" };
     case "upi":
       return { label: "₹", cls: "bg-muted text-muted-foreground" };
   }

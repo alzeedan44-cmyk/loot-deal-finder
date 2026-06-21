@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
+import { Star, Truck } from "lucide-react";
 import { StoreLogo, type Store } from "./StoreLogo";
 import { useWebView } from "@/lib/webview-store";
 import { PriceAlertBell } from "@/lib/price-alert-store";
+import { extendedOffers } from "@/data/products";
+import type { Product as DataProduct } from "@/data/products";
 
 export type Offer = { store: Store; price: number };
 
@@ -16,8 +19,9 @@ export type Product = {
 
 const inr = (n: number) => "₹" + n.toLocaleString("en-IN");
 
-export function ProductCard({ product }: { product: Product }) {
-  const best = product.offers.reduce((a, b) => (a.price < b.price ? a : b));
+export function ProductCard({ product }: { product: DataProduct }) {
+  const rows = extendedOffers(product).sort((a, b) => a.price - b.price);
+  const best = rows[0];
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
   const { open } = useWebView();
 
@@ -51,23 +55,42 @@ export function ProductCard({ product }: { product: Product }) {
             </span>
           </div>
           <p className="mt-auto pt-1 text-[11px] text-muted-foreground">
-            Best on <span className="font-semibold capitalize text-foreground">{best.store}</span>
+            Best on <span className="font-semibold capitalize text-foreground">{best.store}</span> · {rows.length} stores
           </p>
         </div>
       </Link>
 
-      <div className="grid grid-cols-3 gap-1 border-t border-border bg-muted/40 px-2 py-2">
-        {product.offers.map((o) => {
-          const isBest = o.store === best.store;
+      <div className="divide-y divide-border border-t border-border bg-muted/30">
+        {rows.map((o, i) => {
+          const isBest = i === 0;
           return (
             <div
               key={o.store}
-              className={`flex flex-col items-center gap-1 rounded-lg py-1.5 ${
-                isBest ? "bg-primary/10 ring-1 ring-primary/30" : ""
+              className={`flex items-center gap-2.5 px-3 py-2 ${
+                isBest ? "bg-primary/5" : ""
               }`}
             >
-              <StoreLogo store={o.store} />
-              <span className={`text-sm font-bold ${isBest ? "text-primary" : "text-foreground"}`}>
+              <div className="w-[72px] shrink-0">
+                <StoreLogo store={o.store} />
+              </div>
+              <div className="min-w-0 flex-1 leading-tight">
+                <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                  <span className="inline-flex items-center gap-0.5 rounded bg-[oklch(0.97_0.05_85)] px-1 py-px font-bold text-[oklch(0.45_0.15_75)]">
+                    <Star className="h-2.5 w-2.5 fill-current" />
+                    {o.rating}
+                  </span>
+                  <span className="tabular-nums">({o.ratings.toLocaleString("en-IN")})</span>
+                </div>
+                <p className="mt-0.5 flex items-center gap-1 text-[10px] text-muted-foreground">
+                  <Truck className="h-2.5 w-2.5" />
+                  {o.eta}
+                </p>
+              </div>
+              <span
+                className={`text-right text-sm font-extrabold tabular-nums ${
+                  isBest ? "text-primary" : "text-foreground"
+                }`}
+              >
                 {inr(o.price)}
               </span>
             </div>

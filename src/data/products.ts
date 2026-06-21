@@ -1,8 +1,18 @@
-import type { Product as BaseProduct } from "@/components/ProductCard";
+import type { Store } from "@/components/StoreLogo";
 
 export type CategoryId = "fashion" | "electronics" | "beauty" | "home";
 
-export type Product = BaseProduct & { category: CategoryId };
+export type Offer = { store: Store; price: number };
+
+export type Product = {
+  id: string;
+  title: string;
+  emoji: string;
+  bg: string;
+  mrp: number;
+  offers: Offer[];
+  category: CategoryId;
+};
 
 export const categoryMeta: Record<
   CategoryId,
@@ -161,3 +171,67 @@ export const products: Product[] = [
 ];
 
 export const getProduct = (id: string) => products.find((p) => p.id === id);
+
+
+export type ExtendedOffer = {
+  store: Store;
+  price: number;
+  rating: number;
+  ratings: number;
+  eta: string;
+};
+
+// Deterministic pseudo-random from string seed
+function seed(s: string) {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return () => {
+    h ^= h << 13;
+    h ^= h >>> 17;
+    h ^= h << 5;
+    return ((h >>> 0) % 10000) / 10000;
+  };
+}
+
+const extraByCategory: Record<CategoryId, Store[]> = {
+  fashion: ["ajio", "tatacliq"],
+  beauty: ["nykaa", "tatacliq"],
+  electronics: ["tatacliq"],
+  home: ["tatacliq"],
+};
+
+const etaPool = [
+  "Delivery in 2 days",
+  "Delivery by tomorrow",
+  "Delivery in 3–4 days",
+  "Same day delivery",
+  "Delivery in 5 days",
+];
+
+export function extendedOffers(product: Product): ExtendedOffer[] {
+  const rng = seed(product.id);
+  const baseStores = product.offers.map((o) => o.store);
+  const extras = extraByCategory[product.category].filter(
+    (s) => !baseStores.includes(s),
+  );
+  const all: { store: Store; price: number }[] = [
+    ...product.offers,
+    ...extras.map((store) => {
+      // generate a price near average of existing offers
+      const avg =
+        product.offers.reduce((s, o) => s + o.price, 0) / product.offers.length;
+      const delta = (rng() - 0.4) * 0.08 * avg; // ±~8%
+      return { store, price: Math.round((avg + delta) / 10) * 10 };
+    }),
+  ];
+  return all.map((o) => ({
+    ...o,
+    rating: Math.round((3.9 + rng() * 0.9) * 10) / 10, // 3.9 – 4.8
+    ratings: Math.round(800 + rng() * 28000),
+    eta: etaPool[Math.floor(rng() * etaPool.length)],
+  }));
+}
+
