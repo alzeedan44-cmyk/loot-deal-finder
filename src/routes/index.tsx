@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Flame, Shirt, Smartphone, Sparkles, Sofa, ChevronRight, Tag } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
-import { ProductCard, type Product } from "@/components/ProductCard";
+import { ProductCard } from "@/components/ProductCard";
+import { products as allProducts, type Product } from "@/data/products";
 
 export const Route = createFileRoute("/")({
   head: () => ({
