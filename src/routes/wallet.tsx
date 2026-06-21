@@ -255,6 +255,9 @@ function WalletPage() {
           </div>
         </div>
       </section>
+      {/* Refer & Earn */}
+      <ReferEarnCard />
+
 
       {/* Recent activity */}
       <section className="px-4 pt-5">
