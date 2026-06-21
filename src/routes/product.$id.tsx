@@ -185,54 +185,70 @@ function ProductView() {
         </header>
 
         <div className="overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="grid grid-cols-[28px_1fr_auto_auto] gap-x-3 border-b border-border bg-muted/40 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+          <div className="grid grid-cols-[24px_1fr_auto] gap-x-2 border-b border-border bg-muted/40 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
             <span>#</span>
-            <span>Store</span>
+            <span>Store · Rating · Delivery</span>
             <span className="text-right">Price</span>
-            <span className="text-right">Action</span>
           </div>
           {ranked.map((o, i) => {
             const diff = o.price - best.price;
             return (
               <div
                 key={o.store}
-                className={`grid grid-cols-[28px_1fr_auto_auto] items-center gap-x-3 px-3 py-3 ${
+                className={`grid grid-cols-[24px_1fr_auto] items-center gap-x-2 px-3 py-3 ${
                   i === 0 ? "bg-success/5" : ""
                 } ${i < ranked.length - 1 ? "border-b border-border" : ""}`}
               >
                 <span
-                  className={`grid h-6 w-6 place-items-center rounded-full text-[11px] font-extrabold ring-1 ${rankTone[i]}`}
+                  className={`grid h-6 w-6 place-items-center rounded-full text-[11px] font-extrabold ring-1 ${rankTone[Math.min(i, 2)]}`}
                 >
                   {i + 1}
                 </span>
                 <div className="flex min-w-0 flex-col gap-1">
-                  <StoreLogo store={o.store} />
-                  <span className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
-                    {rankSuffix[i]}
-                    {i === 0 && " · Best deal"}
-                    {i > 0 && ` · +${inr(diff)}`}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <StoreLogo store={o.store} />
+                    <span className="inline-flex items-center gap-0.5 rounded bg-[oklch(0.97_0.05_85)] px-1 py-px text-[10px] font-bold text-[oklch(0.45_0.15_75)]">
+                      <Star className="h-2.5 w-2.5 fill-current" />
+                      {o.rating}
+                    </span>
+                    <span className="text-[10px] text-muted-foreground tabular-nums">
+                      ({o.ratings.toLocaleString("en-IN")})
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Truck className="h-2.5 w-2.5" />
+                      {o.eta}
+                    </span>
+                    {i === 0 ? (
+                      <span className="font-bold text-success">Best deal</span>
+                    ) : (
+                      <span>+{inr(diff)}</span>
+                    )}
+                  </div>
                 </div>
-                <span
-                  className={`text-right text-base font-extrabold tabular-nums ${
-                    i === 0 ? "text-success" : "text-foreground"
-                  }`}
-                >
-                  {inr(o.price)}
-                </span>
-                <button
-                  type="button"
-                  onClick={() =>
-                    openWebView({ store: o.store, title: product.title, price: o.price })
-                  }
-                  className={`rounded-lg px-3 py-1.5 text-[11px] font-bold active:scale-95 ${
-                    i === 0
-                      ? "bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-pop)]"
-                      : "bg-muted text-foreground"
-                  }`}
-                >
-                  Buy
-                </button>
+                <div className="flex flex-col items-end gap-1.5">
+                  <span
+                    className={`text-base font-extrabold tabular-nums ${
+                      i === 0 ? "text-success" : "text-foreground"
+                    }`}
+                  >
+                    {inr(o.price)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      openWebView({ store: o.store, title: product.title, price: o.price })
+                    }
+                    className={`rounded-lg px-3 py-1 text-[11px] font-bold active:scale-95 ${
+                      i === 0
+                        ? "bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-pop)]"
+                        : "bg-muted text-foreground"
+                    }`}
+                  >
+                    Buy
+                  </button>
+                </div>
               </div>
             );
           })}
