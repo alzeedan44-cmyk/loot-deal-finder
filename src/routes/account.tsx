@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint } from "lucide-react";
+import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint, Wallet, BadgeCheck, ChevronRight, Settings } from "lucide-react";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
