@@ -16,7 +16,13 @@ import {
   Banknote,
   ShoppingBag,
   X,
+  Copy,
+  Check,
+  Users,
+  Share2,
+  MoreHorizontal,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { MobileShell } from "@/components/MobileShell";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
