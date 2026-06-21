@@ -31,7 +31,13 @@ function AccountPage() {
           <ShieldCheck className="h-3.5 w-3.5 text-[oklch(0.82_0.18_295)]" />
           Account & Security
         </p>
-        <span className="h-10 w-10" />
+        <Link
+          to="/admin"
+          aria-label="Admin Control Panel"
+          className="grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white/70 active:scale-95 hover:text-white"
+        >
+          <Settings className="h-5 w-5" />
+        </Link>
       </header>
 
       <main className="relative flex-1 px-5 pb-12 pt-2">
