@@ -45,7 +45,7 @@ function ProductView() {
   const [alert, setAlert] = useState(false);
   const [active, setActive] = useState(0);
 
-  const ranked = [...product.offers].sort((a, b) => a.price - b.price);
+  const ranked = extendedOffers(product).sort((a, b) => a.price - b.price);
   const best = ranked[0];
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
 
