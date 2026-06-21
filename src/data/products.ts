@@ -1,8 +1,18 @@
-import type { Product as BaseProduct } from "@/components/ProductCard";
+import type { Store } from "@/components/StoreLogo";
 
 export type CategoryId = "fashion" | "electronics" | "beauty" | "home";
 
-export type Product = BaseProduct & { category: CategoryId };
+export type Offer = { store: Store; price: number };
+
+export type Product = {
+  id: string;
+  title: string;
+  emoji: string;
+  bg: string;
+  mrp: number;
+  offers: Offer[];
+  category: CategoryId;
+};
 
 export const categoryMeta: Record<
   CategoryId,
