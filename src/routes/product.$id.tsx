@@ -1,8 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info } from "lucide-react";
+import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info, Star } from "lucide-react";
 import { StoreLogo } from "@/components/StoreLogo";
-import { getProduct } from "@/data/products";
+import { getProduct, extendedOffers } from "@/data/products";
 import { useWebView } from "@/lib/webview-store";
 
 export const Route = createFileRoute("/product/$id")({
