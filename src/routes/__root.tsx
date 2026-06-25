@@ -96,6 +96,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "NeoCart — Compare Prices & Grab the Best Deals" },
+      { name: "description", content: "Deal Seeker India is a mobile-optimized web app for comparing prices and finding deals on products in India." },
+      { property: "og:description", content: "Deal Seeker India is a mobile-optimized web app for comparing prices and finding deals on products in India." },
+      { name: "twitter:description", content: "Deal Seeker India is a mobile-optimized web app for comparing prices and finding deals on products in India." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22a00092-448c-4762-9fc8-176e6f2f5698/id-preview-1692c2bd--314a1ba8-ef2d-4e3c-80f9-a724af17e54c.lovable.app-1782022688693.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/22a00092-448c-4762-9fc8-176e6f2f5698/id-preview-1692c2bd--314a1ba8-ef2d-4e3c-80f9-a724af17e54c.lovable.app-1782022688693.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
