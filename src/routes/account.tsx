@@ -16,8 +16,60 @@ export const Route = createFileRoute("/account")({
 });
 
 function AccountPage() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [session, setSession] = useState<{ email?: string; name?: string; avatar?: string } | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
+      const u = data.session?.user;
+      if (u) {
+        setSession({
+          email: u.email ?? undefined,
+          name: (u.user_metadata?.full_name as string) ?? (u.user_metadata?.name as string) ?? undefined,
+          avatar: (u.user_metadata?.avatar_url as string) ?? undefined,
+        });
+      }
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+      const u = s?.user;
+      setSession(u ? {
+        email: u.email ?? undefined,
+        name: (u.user_metadata?.full_name as string) ?? (u.user_metadata?.name as string) ?? undefined,
+        avatar: (u.user_metadata?.avatar_url as string) ?? undefined,
+      } : null);
+    });
+    return () => { mounted = false; sub.subscription.unsubscribe(); };
+  }, []);
+
+  async function handleGoogle() {
+    setLoading(true);
+    try {
+      const res = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: typeof window !== "undefined" ? window.location.origin + "/account" : undefined,
+      });
+      if ((res as any)?.error) {
+        toast.error("Sign-in failed", { description: String((res as any).error?.message ?? (res as any).error) });
+      } else if (!(res as any)?.redirected) {
+        toast.success("Signed in as " + (session?.email ?? "your Google account"));
+        router.navigate({ to: "/wallet" });
+      }
+    } catch (e: any) {
+      toast.error("Sign-in error", { description: e?.message ?? String(e) });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    toast.success("Signed out");
+    setSession(null);
+  }
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-[oklch(0.18_0.04_270)] text-[oklch(0.98_0.005_270)]">
