@@ -1,6 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint, Wallet, BadgeCheck, ChevronRight, Settings } from "lucide-react";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint, Wallet, BadgeCheck, ChevronRight, Settings, LogOut } from "lucide-react";
+import { lovable } from "@/integrations/lovable";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
@@ -13,8 +16,60 @@ export const Route = createFileRoute("/account")({
 });
 
 function AccountPage() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [session, setSession] = useState<{ email?: string; name?: string; avatar?: string } | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    supabase.auth.getSession().then(({ data }) => {
+      if (!mounted) return;
+      const u = data.session?.user;
+      if (u) {
+        setSession({
+          email: u.email ?? undefined,
+          name: (u.user_metadata?.full_name as string) ?? (u.user_metadata?.name as string) ?? undefined,
+          avatar: (u.user_metadata?.avatar_url as string) ?? undefined,
+        });
+      }
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+      const u = s?.user;
+      setSession(u ? {
+        email: u.email ?? undefined,
+        name: (u.user_metadata?.full_name as string) ?? (u.user_metadata?.name as string) ?? undefined,
+        avatar: (u.user_metadata?.avatar_url as string) ?? undefined,
+      } : null);
+    });
+    return () => { mounted = false; sub.subscription.unsubscribe(); };
+  }, []);
+
+  async function handleGoogle() {
+    setLoading(true);
+    try {
+      const res = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: typeof window !== "undefined" ? window.location.origin + "/account" : undefined,
+      });
+      if ((res as any)?.error) {
+        toast.error("Sign-in failed", { description: String((res as any).error?.message ?? (res as any).error) });
+      } else if (!(res as any)?.redirected) {
+        toast.success("Signed in as " + (session?.email ?? "your Google account"));
+        router.navigate({ to: "/wallet" });
+      }
+    } catch (e: any) {
+      toast.error("Sign-in error", { description: e?.message ?? String(e) });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    toast.success("Signed out");
+    setSession(null);
+  }
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[480px] flex-col bg-[oklch(0.18_0.04_270)] text-[oklch(0.98_0.005_270)]">
@@ -145,12 +200,24 @@ function AccountPage() {
               />
 
               <button
-                type="submit"
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white text-[13px] font-extrabold text-[oklch(0.20_0.04_270)] shadow-[0_8px_20px_-6px_rgba(255,255,255,0.25)] transition-transform active:scale-[0.98]"
+                type="button"
+                onClick={handleGoogle}
+                disabled={loading}
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white text-[13px] font-extrabold text-[oklch(0.20_0.04_270)] shadow-[0_8px_20px_-6px_rgba(255,255,255,0.25)] transition-transform active:scale-[0.98] disabled:opacity-60"
               >
                 <GoogleIcon className="h-4 w-4" />
-                Sign In with Google Account
+                {session ? `Signed in as ${session.name ?? session.email}` : loading ? "Opening Google…" : "Sign In with Google Account"}
               </button>
+
+              {session && (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 text-[12px] font-bold text-white/80 active:scale-[0.98]"
+                >
+                  <LogOut className="h-4 w-4" /> Sign out
+                </button>
+              )}
 
               <div className="flex items-center gap-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[oklch(0.62_0.02_270)]">
                 <span className="h-px flex-1 bg-white/10" />
