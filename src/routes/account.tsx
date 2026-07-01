@@ -1,6 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint, Wallet, BadgeCheck, ChevronRight, Settings } from "lucide-react";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Mail, User, ShieldCheck, Lock, Sparkles, Fingerprint, Wallet, BadgeCheck, ChevronRight, Settings, LogOut } from "lucide-react";
+import { lovable } from "@/integrations/lovable";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/account")({
   head: () => ({
