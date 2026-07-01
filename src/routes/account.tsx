@@ -200,12 +200,24 @@ function AccountPage() {
               />
 
               <button
-                type="submit"
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white text-[13px] font-extrabold text-[oklch(0.20_0.04_270)] shadow-[0_8px_20px_-6px_rgba(255,255,255,0.25)] transition-transform active:scale-[0.98]"
+                type="button"
+                onClick={handleGoogle}
+                disabled={loading}
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-white text-[13px] font-extrabold text-[oklch(0.20_0.04_270)] shadow-[0_8px_20px_-6px_rgba(255,255,255,0.25)] transition-transform active:scale-[0.98] disabled:opacity-60"
               >
                 <GoogleIcon className="h-4 w-4" />
-                Sign In with Google Account
+                {session ? `Signed in as ${session.name ?? session.email}` : loading ? "Opening Google…" : "Sign In with Google Account"}
               </button>
+
+              {session && (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 text-[12px] font-bold text-white/80 active:scale-[0.98]"
+                >
+                  <LogOut className="h-4 w-4" /> Sign out
+                </button>
+              )}
 
               <div className="flex items-center gap-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[oklch(0.62_0.02_270)]">
                 <span className="h-px flex-1 bg-white/10" />
