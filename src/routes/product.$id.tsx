@@ -1,25 +1,19 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info, Star } from "lucide-react";
+import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info, Star, Loader2 } from "lucide-react";
 import { StoreLogo } from "@/components/StoreLogo";
-import { getProduct, extendedOffers } from "@/data/products";
+import { extendedOffers } from "@/data/products";
+import { useProduct } from "@/lib/products-live";
 import { useWebView } from "@/lib/webview-store";
+import { handleBuy } from "@/lib/buy-handler";
 
 export const Route = createFileRoute("/product/$id")({
-  head: ({ params }) => {
-    const p = getProduct(params.id);
-    return {
-      meta: [
-        { title: p ? `${p.title} — Compare prices | LootKart` : "Product | LootKart" },
-        { name: "description", content: p ? `Compare ${p.title} across Amazon, Flipkart and Myntra.` : "Compare prices across top stores." },
-      ],
-    };
-  },
-  loader: ({ params }) => {
-    const product = getProduct(params.id);
-    if (!product) throw notFound();
-    return { product };
-  },
+  head: () => ({
+    meta: [
+      { title: "Product — Compare prices | NeoCart" },
+      { name: "description", content: "Compare prices across Amazon, Flipkart, Myntra and more." },
+    ],
+  }),
   component: ProductView,
   notFoundComponent: () => (
     <div className="grid min-h-screen place-items-center p-6 text-center">
