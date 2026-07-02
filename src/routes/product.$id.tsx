@@ -1,25 +1,19 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info, Star } from "lucide-react";
+import { ArrowLeft, Bell, BellRing, Share2, Shield, Truck, RotateCcw, Trophy, Info, Star, Loader2 } from "lucide-react";
 import { StoreLogo } from "@/components/StoreLogo";
-import { getProduct, extendedOffers } from "@/data/products";
+import { extendedOffers } from "@/data/products";
+import { useProduct } from "@/lib/products-live";
 import { useWebView } from "@/lib/webview-store";
+import { handleBuy } from "@/lib/buy-handler";
 
 export const Route = createFileRoute("/product/$id")({
-  head: ({ params }) => {
-    const p = getProduct(params.id);
-    return {
-      meta: [
-        { title: p ? `${p.title} — Compare prices | LootKart` : "Product | LootKart" },
-        { name: "description", content: p ? `Compare ${p.title} across Amazon, Flipkart and Myntra.` : "Compare prices across top stores." },
-      ],
-    };
-  },
-  loader: ({ params }) => {
-    const product = getProduct(params.id);
-    if (!product) throw notFound();
-    return { product };
-  },
+  head: () => ({
+    meta: [
+      { title: "Product — Compare prices | NeoCart" },
+      { name: "description", content: "Compare prices across Amazon, Flipkart, Myntra and more." },
+    ],
+  }),
   component: ProductView,
   notFoundComponent: () => (
     <div className="grid min-h-screen place-items-center p-6 text-center">
@@ -40,12 +34,28 @@ const rankTone = [
 ];
 
 function ProductView() {
-  const { product } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const { product, isLoading } = useProduct(id);
   const { open: openWebView } = useWebView();
   const [alert, setAlert] = useState(false);
   const [active, setActive] = useState(0);
 
-  const ranked = extendedOffers(product).sort((a, b) => a.price - b.price);
+  if (!product) {
+    return (
+      <div className="grid min-h-screen place-items-center p-6 text-center">
+        {isLoading ? (
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        ) : (
+          <div>
+            <h1 className="text-xl font-bold">Product not found</h1>
+            <Link to="/" className="mt-3 inline-block text-primary underline">Back to home</Link>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const ranked = (product.richOffers ?? extendedOffers(product)).slice().sort((a, b) => a.price - b.price);
   const best = ranked[0];
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
 
@@ -238,7 +248,7 @@ function ProductView() {
                   <button
                     type="button"
                     onClick={() =>
-                      openWebView({ store: o.store, title: product.title, price: o.price })
+                      handleBuy({ product, store: o.store, price: o.price, openWebView })
                     }
                     className={`rounded-lg px-3 py-1 text-[11px] font-bold active:scale-95 ${
                       i === 0
@@ -295,7 +305,7 @@ function ProductView() {
           <button
             type="button"
             onClick={() =>
-              openWebView({ store: best.store, title: product.title, price: best.price })
+              handleBuy({ product, store: best.store, price: best.price, openWebView })
             }
             className="ml-auto h-12 flex-1 rounded-xl bg-[image:var(--gradient-primary)] text-sm font-bold text-primary-foreground shadow-[var(--shadow-pop)] active:scale-[0.98]"
           >

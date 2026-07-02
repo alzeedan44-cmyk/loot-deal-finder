@@ -5,6 +5,8 @@ import { useWebView } from "@/lib/webview-store";
 import { PriceAlertBell } from "@/lib/price-alert-store";
 import { extendedOffers } from "@/data/products";
 import type { Product as DataProduct } from "@/data/products";
+import type { LiveProduct } from "@/lib/products-live";
+import { handleBuy } from "@/lib/buy-handler";
 
 export type Offer = { store: Store; price: number };
 
@@ -19,8 +21,9 @@ export type Product = {
 
 const inr = (n: number) => "₹" + n.toLocaleString("en-IN");
 
-export function ProductCard({ product }: { product: DataProduct }) {
-  const rows = extendedOffers(product).sort((a, b) => a.price - b.price);
+export function ProductCard({ product }: { product: DataProduct | LiveProduct }) {
+  const rich = (product as LiveProduct).richOffers;
+  const rows = (rich ?? extendedOffers(product)).slice().sort((a, b) => a.price - b.price);
   const best = rows[0];
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
   const { open } = useWebView();
@@ -102,7 +105,7 @@ export function ProductCard({ product }: { product: DataProduct }) {
         <button
           type="button"
           onClick={() =>
-            open({ store: best.store, title: product.title, price: best.price })
+            handleBuy({ product, store: best.store, price: best.price, openWebView: open })
           }
           className="group relative h-11 w-full overflow-hidden rounded-xl bg-[image:var(--gradient-primary)] text-sm font-bold text-primary-foreground shadow-[var(--shadow-pop)] transition-transform active:scale-[0.98]"
         >
