@@ -77,36 +77,35 @@ async function fetchLiveProducts(): Promise<LiveProduct[]> {
     offersByProduct.set(o.product_id, list);
   }
 
-  const live: LiveProduct[] = (prodRows as ProductRow[])
-    .map((p) => {
-      const rows = (offersByProduct.get(p.id) ?? []).filter((r) => r.in_stock !== false);
-      if (rows.length === 0) return null;
-      const category = normalizeCategory(p.category);
-      const rawUrls: Partial<Record<Store, string>> = {};
-      const richOffers: ExtendedOffer[] = rows.map((r) => {
-        const store = r.merchant_slug as Store;
-        if (r.raw_url) rawUrls[store] = r.raw_url;
-        return {
-          store,
-          price: r.price,
-          rating: r.rating ?? 4.2,
-          ratings: r.ratings_count ?? 1200,
-          eta: r.eta ?? "Delivery in 3 days",
-        };
-      });
+  const live: LiveProduct[] = [];
+  for (const p of prodRows as ProductRow[]) {
+    const rows = (offersByProduct.get(p.id) ?? []).filter((r) => r.in_stock !== false);
+    if (rows.length === 0) continue;
+    const category = normalizeCategory(p.category);
+    const rawUrls: Partial<Record<Store, string>> = {};
+    const richOffers: ExtendedOffer[] = rows.map((r) => {
+      const store = r.merchant_slug as Store;
+      if (r.raw_url) rawUrls[store] = r.raw_url;
       return {
-        id: p.id,
-        title: p.title,
-        emoji: p.emoji ?? "🛍️",
-        bg: bgByCategory[category],
-        mrp: p.mrp,
-        category,
-        offers: richOffers.map(({ store, price }) => ({ store, price })),
-        richOffers,
-        rawUrls,
-      } satisfies LiveProduct;
-    })
-    .filter((x): x is LiveProduct => x !== null);
+        store,
+        price: r.price,
+        rating: r.rating ?? 4.2,
+        ratings: r.ratings_count ?? 1200,
+        eta: r.eta ?? "Delivery in 3 days",
+      };
+    });
+    live.push({
+      id: p.id,
+      title: p.title,
+      emoji: p.emoji ?? "🛍️",
+      bg: bgByCategory[category],
+      mrp: p.mrp,
+      category,
+      offers: richOffers.map(({ store, price }) => ({ store, price })),
+      richOffers,
+      rawUrls,
+    });
+  }
 
   return live.length > 0 ? live : staticProducts;
 }
