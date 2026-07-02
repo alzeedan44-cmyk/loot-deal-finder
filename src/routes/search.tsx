@@ -77,6 +77,7 @@ function SearchPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [maxBudget, setMaxBudget] = useState(PRICE_MAX);
   const [selectedStores, setSelectedStores] = useState<Store[]>(["amazon", "flipkart", "myntra"]);
+  const { data: products = [] } = useProducts();
 
   const effectiveQuery = query.trim().toLowerCase();
   const activeCategory = search.category;
