@@ -248,7 +248,7 @@ function ProductView() {
                   <button
                     type="button"
                     onClick={() =>
-                      openWebView({ store: o.store, title: product.title, price: o.price })
+                      handleBuy({ product, store: o.store, price: o.price, openWebView })
                     }
                     className={`rounded-lg px-3 py-1 text-[11px] font-bold active:scale-95 ${
                       i === 0
@@ -305,7 +305,7 @@ function ProductView() {
           <button
             type="button"
             onClick={() =>
-              openWebView({ store: best.store, title: product.title, price: best.price })
+              handleBuy({ product, store: best.store, price: best.price, openWebView })
             }
             className="ml-auto h-12 flex-1 rounded-xl bg-[image:var(--gradient-primary)] text-sm font-bold text-primary-foreground shadow-[var(--shadow-pop)] active:scale-[0.98]"
           >
