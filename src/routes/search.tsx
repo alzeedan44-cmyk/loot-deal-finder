@@ -17,7 +17,8 @@ import {
 
 import { MobileShell } from "@/components/MobileShell";
 import { StoreLogo, type Store } from "@/components/StoreLogo";
-import { products, categoryMeta, type CategoryId } from "@/data/products";
+import { categoryMeta, type CategoryId } from "@/data/products";
+import { useProducts } from "@/lib/products-live";
 import { cn } from "@/lib/utils";
 import { PriceAlertBell } from "@/lib/price-alert-store";
 

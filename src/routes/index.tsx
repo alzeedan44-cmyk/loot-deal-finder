@@ -76,8 +76,6 @@ const categories = [
   },
 ];
 
-const products: never[] = [];
-
 function Home() {
   const { data: allProducts = [] } = useProducts();
   const feed = allProducts.slice(0, 6);
@@ -176,7 +174,7 @@ function Home() {
         </header>
 
         <div className="flex flex-col gap-3">
-          {products.map((p) => (
+          {feed.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
