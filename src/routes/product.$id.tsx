@@ -34,12 +34,28 @@ const rankTone = [
 ];
 
 function ProductView() {
-  const { product } = Route.useLoaderData();
+  const { id } = Route.useParams();
+  const { product, isLoading } = useProduct(id);
   const { open: openWebView } = useWebView();
   const [alert, setAlert] = useState(false);
   const [active, setActive] = useState(0);
 
-  const ranked = extendedOffers(product).sort((a, b) => a.price - b.price);
+  if (!product) {
+    return (
+      <div className="grid min-h-screen place-items-center p-6 text-center">
+        {isLoading ? (
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        ) : (
+          <div>
+            <h1 className="text-xl font-bold">Product not found</h1>
+            <Link to="/" className="mt-3 inline-block text-primary underline">Back to home</Link>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const ranked = (product.richOffers ?? extendedOffers(product)).slice().sort((a, b) => a.price - b.price);
   const best = ranked[0];
   const off = Math.round(((product.mrp - best.price) / product.mrp) * 100);
 
