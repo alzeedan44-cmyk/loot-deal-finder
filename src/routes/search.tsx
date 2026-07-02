@@ -77,13 +77,14 @@ function SearchPage() {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [maxBudget, setMaxBudget] = useState(PRICE_MAX);
   const [selectedStores, setSelectedStores] = useState<Store[]>(["amazon", "flipkart", "myntra"]);
-  const { data: products = [] } = useProducts();
+  const { data: products } = useProducts();
+  const productList = products ?? [];
 
   const effectiveQuery = query.trim().toLowerCase();
   const activeCategory = search.category;
 
   const results = useMemo(() => {
-    return products.filter((p) => {
+    return productList.filter((p) => {
       if (activeCategory && p.category !== activeCategory) return false;
       if (effectiveQuery && !p.title.toLowerCase().includes(effectiveQuery)) return false;
       const visibleOffers = p.offers.filter((o) => selectedStores.includes(o.store));
@@ -92,7 +93,7 @@ function SearchPage() {
       if (best > maxBudget) return false;
       return true;
     });
-  }, [products, effectiveQuery, activeCategory, selectedStores, maxBudget]);
+  }, [productList, effectiveQuery, activeCategory, selectedStores, maxBudget]);
 
   const toggleStore = (s: Store) => {
     setSelectedStores((prev) =>
