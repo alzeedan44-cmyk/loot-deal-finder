@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Flame, Shirt, Smartphone, Sparkles, Sofa, ChevronRight, Tag } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { ProductCard } from "@/components/ProductCard";
-import { products as allProducts, type Product } from "@/data/products";
+import { useProducts } from "@/lib/products-live";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -76,9 +76,11 @@ const categories = [
   },
 ];
 
-const products: Product[] = allProducts.slice(0, 3);
+const products: never[] = [];
 
 function Home() {
+  const { data: allProducts = [] } = useProducts();
+  const feed = allProducts.slice(0, 6);
   return (
     <MobileShell>
       {/* Promo strip */}
