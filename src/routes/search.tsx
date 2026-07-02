@@ -92,7 +92,7 @@ function SearchPage() {
       if (best > maxBudget) return false;
       return true;
     });
-  }, [effectiveQuery, activeCategory, selectedStores, maxBudget]);
+  }, [products, effectiveQuery, activeCategory, selectedStores, maxBudget]);
 
   const toggleStore = (s: Store) => {
     setSelectedStores((prev) =>
