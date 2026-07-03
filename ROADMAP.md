@@ -16,7 +16,9 @@
   - `products`, `offers`, `price_history`
   - `price_alerts`, `coupons`
   - `clicks` (attribution log with `sub_id` → passed to CUE Links)
-  - `conversions` (commission ledger, 70/30 user-share split)
+  - `conversions` (commission ledger; user share is a variable slice of what
+    we actually receive — default 40 %, controlled by `USER_SHARE_BPS` env.
+    Never promise a fixed cashback % in the UI.)
   - `referrals`, `notifications`
 - 12 real trending Indian SKUs + 6 hot coupons seeded.
 - `src/lib/affiliate.ts` helper that wraps any merchant URL through
