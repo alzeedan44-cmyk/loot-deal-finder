@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as CouponsRouteImport } from './routes/coupons'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AccountRouteImport } from './routes/account'
@@ -27,6 +28,11 @@ const WalletRoute = WalletRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CouponsRoute = CouponsRouteImport.update({
+  id: '/coupons',
+  path: '/coupons',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesRoute = CategoriesRouteImport.update({
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountRoute
   '/admin': typeof AdminRoute
   '/categories': typeof CategoriesRoute
+  '/coupons': typeof CouponsRoute
   '/search': typeof SearchRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/account': typeof AccountRoute
   '/admin': typeof AdminRoute
   '/categories': typeof CategoriesRoute
+  '/coupons': typeof CouponsRoute
   '/search': typeof SearchRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/account': typeof AccountRoute
   '/admin': typeof AdminRoute
   '/categories': typeof CategoriesRoute
+  '/coupons': typeof CouponsRoute
   '/search': typeof SearchRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/categories'
+    | '/coupons'
     | '/search'
     | '/wallet'
     | '/product/$id'
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/categories'
+    | '/coupons'
     | '/search'
     | '/wallet'
     | '/product/$id'
@@ -130,6 +141,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/categories'
+    | '/coupons'
     | '/search'
     | '/wallet'
     | '/product/$id'
@@ -142,6 +154,7 @@ export interface RootRouteChildren {
   AccountRoute: typeof AccountRoute
   AdminRoute: typeof AdminRoute
   CategoriesRoute: typeof CategoriesRoute
+  CouponsRoute: typeof CouponsRoute
   SearchRoute: typeof SearchRoute
   WalletRoute: typeof WalletRoute
   ProductIdRoute: typeof ProductIdRoute
@@ -163,6 +176,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coupons': {
+      id: '/coupons'
+      path: '/coupons'
+      fullPath: '/coupons'
+      preLoaderRoute: typeof CouponsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories': {
@@ -222,6 +242,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountRoute: AccountRoute,
   AdminRoute: AdminRoute,
   CategoriesRoute: CategoriesRoute,
+  CouponsRoute: CouponsRoute,
   SearchRoute: SearchRoute,
   WalletRoute: WalletRoute,
   ProductIdRoute: ProductIdRoute,

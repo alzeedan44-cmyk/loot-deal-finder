@@ -177,7 +177,7 @@ function CouponsPage() {
                   className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
                 >
                   <div className="flex items-start gap-3 p-4">
-                    <StoreLogo store={c.merchant_slug as Store} size="md" />
+                    <StoreLogo store={c.merchant_slug as Store} />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
                         <p className="truncate text-[13px] font-extrabold text-foreground">
