@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Flame, Shirt, Smartphone, Sparkles, Sofa, ChevronRight, Tag } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { ProductCard } from "@/components/ProductCard";
