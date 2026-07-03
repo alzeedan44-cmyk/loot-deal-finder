@@ -16,6 +16,8 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductIdRouteImport } from './routes/product.$id'
+import { Route as ApiPublicHooksRefreshPricesRouteImport } from './routes/api/public/hooks/refresh-prices'
+import { Route as ApiPublicHooksCuelinksPostbackRouteImport } from './routes/api/public/hooks/cuelinks-postback'
 
 const WalletRoute = WalletRouteImport.update({
   id: '/wallet',
@@ -52,6 +54,18 @@ const ProductIdRoute = ProductIdRouteImport.update({
   path: '/product/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksRefreshPricesRoute =
+  ApiPublicHooksRefreshPricesRouteImport.update({
+    id: '/api/public/hooks/refresh-prices',
+    path: '/api/public/hooks/refresh-prices',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicHooksCuelinksPostbackRoute =
+  ApiPublicHooksCuelinksPostbackRouteImport.update({
+    id: '/api/public/hooks/cuelinks-postback',
+    path: '/api/public/hooks/cuelinks-postback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +75,8 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
+  '/api/public/hooks/cuelinks-postback': typeof ApiPublicHooksCuelinksPostbackRoute
+  '/api/public/hooks/refresh-prices': typeof ApiPublicHooksRefreshPricesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +86,8 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
+  '/api/public/hooks/cuelinks-postback': typeof ApiPublicHooksCuelinksPostbackRoute
+  '/api/public/hooks/refresh-prices': typeof ApiPublicHooksRefreshPricesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +98,8 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
+  '/api/public/hooks/cuelinks-postback': typeof ApiPublicHooksCuelinksPostbackRoute
+  '/api/public/hooks/refresh-prices': typeof ApiPublicHooksRefreshPricesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +111,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/wallet'
     | '/product/$id'
+    | '/api/public/hooks/cuelinks-postback'
+    | '/api/public/hooks/refresh-prices'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +122,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/wallet'
     | '/product/$id'
+    | '/api/public/hooks/cuelinks-postback'
+    | '/api/public/hooks/refresh-prices'
   id:
     | '__root__'
     | '/'
@@ -109,6 +133,8 @@ export interface FileRouteTypes {
     | '/search'
     | '/wallet'
     | '/product/$id'
+    | '/api/public/hooks/cuelinks-postback'
+    | '/api/public/hooks/refresh-prices'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +145,8 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   WalletRoute: typeof WalletRoute
   ProductIdRoute: typeof ProductIdRoute
+  ApiPublicHooksCuelinksPostbackRoute: typeof ApiPublicHooksCuelinksPostbackRoute
+  ApiPublicHooksRefreshPricesRoute: typeof ApiPublicHooksRefreshPricesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +200,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/refresh-prices': {
+      id: '/api/public/hooks/refresh-prices'
+      path: '/api/public/hooks/refresh-prices'
+      fullPath: '/api/public/hooks/refresh-prices'
+      preLoaderRoute: typeof ApiPublicHooksRefreshPricesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/cuelinks-postback': {
+      id: '/api/public/hooks/cuelinks-postback'
+      path: '/api/public/hooks/cuelinks-postback'
+      fullPath: '/api/public/hooks/cuelinks-postback'
+      preLoaderRoute: typeof ApiPublicHooksCuelinksPostbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,17 +225,9 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   WalletRoute: WalletRoute,
   ProductIdRoute: ProductIdRoute,
+  ApiPublicHooksCuelinksPostbackRoute: ApiPublicHooksCuelinksPostbackRoute,
+  ApiPublicHooksRefreshPricesRoute: ApiPublicHooksRefreshPricesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
