@@ -82,17 +82,20 @@ function Home() {
   return (
     <MobileShell>
       {/* Promo strip */}
-      <div className="border-b border-border bg-card px-4 py-2.5">
+      <Link
+        to="/coupons"
+        className="block border-b border-border bg-card px-4 py-2.5 transition-colors active:bg-muted"
+      >
         <div className="flex items-center gap-2 text-[12px] text-foreground">
           <span className="grid h-6 w-6 place-items-center rounded-full bg-success/10 text-success">
             <Tag className="h-3.5 w-3.5" />
           </span>
           <span className="truncate">
-            Earn <b className="text-success">upto 12% Cashback</b> on every order
+            <b className="text-success">Fresh loot coupons</b> — verified codes for every store
           </span>
           <ChevronRight className="ml-auto h-4 w-4 text-muted-foreground" />
         </div>
-      </div>
+      </Link>
 
       {/* Loot Deals Carousel */}
       <section className="pt-4">
