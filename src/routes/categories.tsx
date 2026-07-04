@@ -82,7 +82,7 @@ function CategoriesPage() {
             Shop by Category
           </h1>
           <p className="mt-0.5 text-[12px] text-muted-foreground">
-            Earn NeoCoins on every order. Higher cashback in Fashion & Beauty.
+            Earn NeoCoins on every eligible order — we share a slice of what we actually receive.
           </p>
         </header>
 
