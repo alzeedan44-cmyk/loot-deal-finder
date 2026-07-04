@@ -137,6 +137,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useReferralCapture();
 
   return (
     <QueryClientProvider client={queryClient}>
