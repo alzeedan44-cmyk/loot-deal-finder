@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { WalletProvider } from "../lib/wallet-store";
 import { WebViewProvider } from "../lib/webview-store";
 import { PriceAlertProvider } from "../lib/price-alert-store";
+import { useReferralCapture } from "../lib/referral-capture";
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
@@ -105,6 +106,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -135,6 +137,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useReferralCapture();
 
   return (
     <QueryClientProvider client={queryClient}>

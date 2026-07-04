@@ -10,7 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as DisclosureRouteImport } from './routes/disclosure'
 import { Route as CouponsRouteImport } from './routes/coupons'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -25,9 +28,24 @@ const WalletRoute = WalletRouteImport.update({
   path: '/wallet',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisclosureRoute = DisclosureRouteImport.update({
+  id: '/disclosure',
+  path: '/disclosure',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CouponsRoute = CouponsRouteImport.update({
@@ -79,7 +97,10 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/categories': typeof CategoriesRoute
   '/coupons': typeof CouponsRoute
+  '/disclosure': typeof DisclosureRoute
+  '/privacy': typeof PrivacyRoute
   '/search': typeof SearchRoute
+  '/terms': typeof TermsRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
   '/api/public/hooks/cuelinks-postback': typeof ApiPublicHooksCuelinksPostbackRoute
@@ -91,7 +112,10 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/categories': typeof CategoriesRoute
   '/coupons': typeof CouponsRoute
+  '/disclosure': typeof DisclosureRoute
+  '/privacy': typeof PrivacyRoute
   '/search': typeof SearchRoute
+  '/terms': typeof TermsRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
   '/api/public/hooks/cuelinks-postback': typeof ApiPublicHooksCuelinksPostbackRoute
@@ -104,7 +128,10 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/categories': typeof CategoriesRoute
   '/coupons': typeof CouponsRoute
+  '/disclosure': typeof DisclosureRoute
+  '/privacy': typeof PrivacyRoute
   '/search': typeof SearchRoute
+  '/terms': typeof TermsRoute
   '/wallet': typeof WalletRoute
   '/product/$id': typeof ProductIdRoute
   '/api/public/hooks/cuelinks-postback': typeof ApiPublicHooksCuelinksPostbackRoute
@@ -118,7 +145,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/coupons'
+    | '/disclosure'
+    | '/privacy'
     | '/search'
+    | '/terms'
     | '/wallet'
     | '/product/$id'
     | '/api/public/hooks/cuelinks-postback'
@@ -130,7 +160,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/coupons'
+    | '/disclosure'
+    | '/privacy'
     | '/search'
+    | '/terms'
     | '/wallet'
     | '/product/$id'
     | '/api/public/hooks/cuelinks-postback'
@@ -142,7 +175,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/categories'
     | '/coupons'
+    | '/disclosure'
+    | '/privacy'
     | '/search'
+    | '/terms'
     | '/wallet'
     | '/product/$id'
     | '/api/public/hooks/cuelinks-postback'
@@ -155,7 +191,10 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   CategoriesRoute: typeof CategoriesRoute
   CouponsRoute: typeof CouponsRoute
+  DisclosureRoute: typeof DisclosureRoute
+  PrivacyRoute: typeof PrivacyRoute
   SearchRoute: typeof SearchRoute
+  TermsRoute: typeof TermsRoute
   WalletRoute: typeof WalletRoute
   ProductIdRoute: typeof ProductIdRoute
   ApiPublicHooksCuelinksPostbackRoute: typeof ApiPublicHooksCuelinksPostbackRoute
@@ -171,11 +210,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/search': {
       id: '/search'
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disclosure': {
+      id: '/disclosure'
+      path: '/disclosure'
+      fullPath: '/disclosure'
+      preLoaderRoute: typeof DisclosureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/coupons': {
@@ -243,7 +303,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   CategoriesRoute: CategoriesRoute,
   CouponsRoute: CouponsRoute,
+  DisclosureRoute: DisclosureRoute,
+  PrivacyRoute: PrivacyRoute,
   SearchRoute: SearchRoute,
+  TermsRoute: TermsRoute,
   WalletRoute: WalletRoute,
   ProductIdRoute: ProductIdRoute,
   ApiPublicHooksCuelinksPostbackRoute: ApiPublicHooksCuelinksPostbackRoute,

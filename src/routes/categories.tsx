@@ -34,7 +34,7 @@ const tiles: Tile[] = [
   {
     id: "fashion",
     title: "Fashion & Clothing",
-    cashback: "10–12% Cashback",
+    cashback: "Extra NeoCoins",
     icon: Shirt,
     span: "row-span-2",
     bg: "bg-[image:linear-gradient(155deg,oklch(0.55_0.22_15)_0%,oklch(0.42_0.20_350)_100%)]",
@@ -44,7 +44,7 @@ const tiles: Tile[] = [
   {
     id: "electronics",
     title: "Electronics & Gadgets",
-    cashback: "2.5% Cashback",
+    cashback: "NeoCoins on order",
     icon: Smartphone,
     span: "",
     bg: "bg-[image:linear-gradient(155deg,oklch(0.48_0.22_265)_0%,oklch(0.38_0.18_240)_100%)]",
@@ -54,7 +54,7 @@ const tiles: Tile[] = [
   {
     id: "beauty",
     title: "Beauty & Cosmetics",
-    cashback: "8% Cashback",
+    cashback: "Extra NeoCoins",
     icon: Sparkles,
     span: "",
     bg: "bg-[image:linear-gradient(155deg,oklch(0.55_0.22_330)_0%,oklch(0.45_0.22_300)_100%)]",
@@ -64,7 +64,7 @@ const tiles: Tile[] = [
   {
     id: "home",
     title: "Home & Kitchen",
-    cashback: "7% Cashback",
+    cashback: "NeoCoins on order",
     icon: Sofa,
     span: "row-span-2",
     bg: "bg-[image:linear-gradient(155deg,oklch(0.50_0.15_165)_0%,oklch(0.38_0.13_180)_100%)]",
@@ -82,7 +82,7 @@ function CategoriesPage() {
             Shop by Category
           </h1>
           <p className="mt-0.5 text-[12px] text-muted-foreground">
-            Earn NeoCoins on every order. Higher cashback in Fashion & Beauty.
+            Earn NeoCoins on every eligible order — we share a slice of what we actually receive.
           </p>
         </header>
 

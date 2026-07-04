@@ -491,13 +491,13 @@ function ReferEarnCard() {
     }
     setCopied(true);
     toast.success("Referral code copied!", {
-      description: `Share ${code} with friends and earn 50 NeoCoins each.`,
+      description: `Share ${code} — you'll both earn NeoCoins on their first tracked order.`,
     });
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleShare = async (channel: "whatsapp" | "telegram" | "more") => {
-    const text = `Join me on NeoCart! Use code ${code} on your first Amazon/Myntra purchase — we both get 50 free NeoCoins (₹50). Download: https://neocart.app`;
+    const text = `Join me on NeoCart! Use code ${code} to earn NeoCoins on your first tracked shopping order. Download: https://neocart.app`;
     if (channel === "more" && typeof navigator !== "undefined" && "share" in navigator) {
       try {
         await (navigator as Navigator & { share: (d: ShareData) => Promise<void> }).share({
@@ -537,20 +537,18 @@ function ReferEarnCard() {
             </span>
             <div className="min-w-0 flex-1">
               <h3 className="font-display text-base font-extrabold leading-tight">
-                Invite Friends, Double Your Bachat!
+                Invite Friends, Earn Together
               </h3>
             </div>
             <span className="rounded-full bg-[oklch(0.85_0.20_150)]/20 px-2 py-1 text-[9px] font-extrabold uppercase tracking-wider text-[oklch(0.85_0.20_150)]">
-              +50 NC
+              Bonus NC
             </span>
           </div>
 
           <p className="mt-2.5 text-[12px] leading-relaxed text-white/75">
-            Share your unique NeoCart referral code with friends. When they complete their
-            first purchase from <b className="text-white">Amazon</b> or{" "}
-            <b className="text-white">Myntra</b> through NeoCart, you both instantly receive{" "}
-            <b className="text-[oklch(0.88_0.18_150)]">50 free NeoCoins (₹50)</b> directly into
-            your available balance!
+            Share your NeoCart code with friends. When they complete their first tracked order
+            through NeoCart, you both earn <b className="text-white">bonus NeoCoins</b> from
+            our commission share — credited once the order is approved by the store.
           </p>
 
           {/* Code + Copy */}
