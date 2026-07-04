@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+  <url><loc>https://loot-deal-finder.lovable.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/search</loc><priority>0.9</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/categories</loc><priority>0.9</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/coupons</loc><priority>0.9</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/wallet</loc><priority>0.6</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/account</loc><priority>0.6</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/privacy</loc><priority>0.3</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/terms</loc><priority>0.3</priority></url>
+  <url><loc>https://loot-deal-finder.lovable.app/disclosure</loc><priority>0.3</priority></url>
+</urlset>

@@ -1,0 +1,5 @@
+// robots.txt for NeoCart
+User-agent: *
+Allow: /
+
+Sitemap: https://loot-deal-finder.lovable.app/sitemap.xml
