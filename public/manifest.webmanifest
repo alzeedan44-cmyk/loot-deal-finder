@@ -1,0 +1,19 @@
+{
+  "name": "NeoCart — Compare Prices & Earn NeoCoins",
+  "short_name": "NeoCart",
+  "description": "Compare live prices across Amazon, Flipkart, Myntra, Ajio, Nykaa & Tata CLiQ. Earn NeoCoins on every tracked order.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f0b1f",
+  "theme_color": "#5b21b6",
+  "categories": ["shopping", "lifestyle", "finance"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 32x32 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
