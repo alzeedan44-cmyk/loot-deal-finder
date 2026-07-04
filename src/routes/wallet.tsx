@@ -491,7 +491,7 @@ function ReferEarnCard() {
     }
     setCopied(true);
     toast.success("Referral code copied!", {
-      description: `Share ${code} with friends and earn 50 NeoCoins each.`,
+      description: `Share ${code} — you'll both earn NeoCoins on their first tracked order.`,
     });
     setTimeout(() => setCopied(false), 2000);
   };
