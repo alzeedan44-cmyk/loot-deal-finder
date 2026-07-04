@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { WalletProvider } from "../lib/wallet-store";
 import { WebViewProvider } from "../lib/webview-store";
 import { PriceAlertProvider } from "../lib/price-alert-store";
+import { useReferralCapture } from "../lib/referral-capture";
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
