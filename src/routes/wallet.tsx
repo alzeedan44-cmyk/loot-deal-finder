@@ -497,7 +497,7 @@ function ReferEarnCard() {
   };
 
   const handleShare = async (channel: "whatsapp" | "telegram" | "more") => {
-    const text = `Join me on NeoCart! Use code ${code} on your first Amazon/Myntra purchase — we both get 50 free NeoCoins (₹50). Download: https://neocart.app`;
+    const text = `Join me on NeoCart! Use code ${code} to earn NeoCoins on your first tracked shopping order. Download: https://neocart.app`;
     if (channel === "more" && typeof navigator !== "undefined" && "share" in navigator) {
       try {
         await (navigator as Navigator & { share: (d: ShareData) => Promise<void> }).share({
