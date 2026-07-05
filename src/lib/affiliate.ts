@@ -7,9 +7,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 // Public config — safe to expose on the client.
 // User can override these later inside src/config/affiliate.ts if desired.
-const CUELINKS_CID = (import.meta.env.VITE_CUELINKS_CID as string) || "REPLACE_CUELINKS_CID";
-const AMAZON_TAG = (import.meta.env.VITE_AMAZON_TAG as string) || "neocartapp-21";
-const FLIPKART_AFFID = (import.meta.env.VITE_FLIPKART_AFFID as string) || "neocart";
+// CueLinks Campaign ID is a public identifier (shipped inside their JS snippet) — safe in client code.
+const CUELINKS_CID = (import.meta.env.VITE_CUELINKS_CID as string) || "299746";
+const AMAZON_TAG = (import.meta.env.VITE_AMAZON_TAG as string) || "";
+const FLIPKART_AFFID = (import.meta.env.VITE_FLIPKART_AFFID as string) || "";
 
 function randomSubId() {
   // 12 char base36
