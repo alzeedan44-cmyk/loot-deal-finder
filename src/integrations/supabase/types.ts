@@ -51,6 +51,13 @@ export type Database = {
             referencedColumns: ["slug"]
           },
           {
+            foreignKeyName: "clicks_merchant_slug_fkey"
+            columns: ["merchant_slug"]
+            isOneToOne: false
+            referencedRelation: "merchants_public"
+            referencedColumns: ["slug"]
+          },
+          {
             foreignKeyName: "clicks_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
@@ -117,6 +124,13 @@ export type Database = {
             referencedRelation: "merchants"
             referencedColumns: ["slug"]
           },
+          {
+            foreignKeyName: "conversions_merchant_slug_fkey"
+            columns: ["merchant_slug"]
+            isOneToOne: false
+            referencedRelation: "merchants_public"
+            referencedColumns: ["slug"]
+          },
         ]
       }
       coupons: {
@@ -162,6 +176,13 @@ export type Database = {
             columns: ["merchant_slug"]
             isOneToOne: false
             referencedRelation: "merchants"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "coupons_merchant_slug_fkey"
+            columns: ["merchant_slug"]
+            isOneToOne: false
+            referencedRelation: "merchants_public"
             referencedColumns: ["slug"]
           },
         ]
@@ -286,6 +307,13 @@ export type Database = {
             referencedColumns: ["slug"]
           },
           {
+            foreignKeyName: "offers_merchant_slug_fkey"
+            columns: ["merchant_slug"]
+            isOneToOne: false
+            referencedRelation: "merchants_public"
+            referencedColumns: ["slug"]
+          },
+          {
             foreignKeyName: "offers_product_id_fkey"
             columns: ["product_id"]
             isOneToOne: false
@@ -360,6 +388,13 @@ export type Database = {
             columns: ["merchant_slug"]
             isOneToOne: false
             referencedRelation: "merchants"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "price_history_merchant_slug_fkey"
+            columns: ["merchant_slug"]
+            isOneToOne: false
+            referencedRelation: "merchants_public"
             referencedColumns: ["slug"]
           },
           {
@@ -493,7 +528,30 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      merchants_public: {
+        Row: {
+          active: boolean | null
+          domain: string | null
+          logo_bg: string | null
+          name: string | null
+          slug: string | null
+        }
+        Insert: {
+          active?: boolean | null
+          domain?: string | null
+          logo_bg?: string | null
+          name?: string | null
+          slug?: string | null
+        }
+        Update: {
+          active?: boolean | null
+          domain?: string | null
+          logo_bg?: string | null
+          name?: string | null
+          slug?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
