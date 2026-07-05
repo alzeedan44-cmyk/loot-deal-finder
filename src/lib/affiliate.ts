@@ -19,30 +19,30 @@ function randomSubId() {
   ).toUpperCase();
 }
 
+function cueWrap(rawUrl: string, subId: string): string {
+  return (
+    `https://linksredirect.com/?cid=${encodeURIComponent(CUELINKS_CID)}` +
+    `&source=linkkit&url=${encodeURIComponent(rawUrl)}` +
+    `&subid=${encodeURIComponent(subId)}`
+  );
+}
+
 export function wrapAffiliate(rawUrl: string, merchantSlug: string, subId: string): string {
   try {
     const u = new URL(rawUrl);
-    switch (merchantSlug) {
-      case "amazon": {
-        u.searchParams.set("tag", AMAZON_TAG);
-        u.searchParams.set("ascsubtag", subId);
-        return u.toString();
-      }
-      case "flipkart": {
-        u.searchParams.set("affid", FLIPKART_AFFID);
-        u.searchParams.set("affExtParam1", subId);
-        return u.toString();
-      }
-      default: {
-        // CUE Links universal deep-link wrapper
-        // Doc pattern: https://linksredirect.com/?cid=CID&source=linkkit&url=ENCODED&subid=SUBID
-        const wrapped =
-          `https://linksredirect.com/?cid=${encodeURIComponent(CUELINKS_CID)}` +
-          `&source=linkkit&url=${encodeURIComponent(rawUrl)}` +
-          `&subid=${encodeURIComponent(subId)}`;
-        return wrapped;
-      }
+    // Prefer direct affiliate tags when configured; otherwise route via CueLinks
+    // (CueLinks covers Amazon India, Flipkart, Myntra, Ajio and 21k+ merchants).
+    if (merchantSlug === "amazon" && AMAZON_TAG) {
+      u.searchParams.set("tag", AMAZON_TAG);
+      u.searchParams.set("ascsubtag", subId);
+      return u.toString();
     }
+    if (merchantSlug === "flipkart" && FLIPKART_AFFID) {
+      u.searchParams.set("affid", FLIPKART_AFFID);
+      u.searchParams.set("affExtParam1", subId);
+      return u.toString();
+    }
+    return cueWrap(rawUrl, subId);
   } catch {
     return rawUrl;
   }
