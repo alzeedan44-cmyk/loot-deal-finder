@@ -7,9 +7,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 // Public config — safe to expose on the client.
 // User can override these later inside src/config/affiliate.ts if desired.
-const CUELINKS_CID = (import.meta.env.VITE_CUELINKS_CID as string) || "REPLACE_CUELINKS_CID";
-const AMAZON_TAG = (import.meta.env.VITE_AMAZON_TAG as string) || "neocartapp-21";
-const FLIPKART_AFFID = (import.meta.env.VITE_FLIPKART_AFFID as string) || "neocart";
+// CueLinks Campaign ID is a public identifier (shipped inside their JS snippet) — safe in client code.
+const CUELINKS_CID = (import.meta.env.VITE_CUELINKS_CID as string) || "299746";
+const AMAZON_TAG = (import.meta.env.VITE_AMAZON_TAG as string) || "";
+const FLIPKART_AFFID = (import.meta.env.VITE_FLIPKART_AFFID as string) || "";
 
 function randomSubId() {
   // 12 char base36
@@ -18,30 +19,30 @@ function randomSubId() {
   ).toUpperCase();
 }
 
+function cueWrap(rawUrl: string, subId: string): string {
+  return (
+    `https://linksredirect.com/?cid=${encodeURIComponent(CUELINKS_CID)}` +
+    `&source=linkkit&url=${encodeURIComponent(rawUrl)}` +
+    `&subid=${encodeURIComponent(subId)}`
+  );
+}
+
 export function wrapAffiliate(rawUrl: string, merchantSlug: string, subId: string): string {
   try {
     const u = new URL(rawUrl);
-    switch (merchantSlug) {
-      case "amazon": {
-        u.searchParams.set("tag", AMAZON_TAG);
-        u.searchParams.set("ascsubtag", subId);
-        return u.toString();
-      }
-      case "flipkart": {
-        u.searchParams.set("affid", FLIPKART_AFFID);
-        u.searchParams.set("affExtParam1", subId);
-        return u.toString();
-      }
-      default: {
-        // CUE Links universal deep-link wrapper
-        // Doc pattern: https://linksredirect.com/?cid=CID&source=linkkit&url=ENCODED&subid=SUBID
-        const wrapped =
-          `https://linksredirect.com/?cid=${encodeURIComponent(CUELINKS_CID)}` +
-          `&source=linkkit&url=${encodeURIComponent(rawUrl)}` +
-          `&subid=${encodeURIComponent(subId)}`;
-        return wrapped;
-      }
+    // Prefer direct affiliate tags when configured; otherwise route via CueLinks
+    // (CueLinks covers Amazon India, Flipkart, Myntra, Ajio and 21k+ merchants).
+    if (merchantSlug === "amazon" && AMAZON_TAG) {
+      u.searchParams.set("tag", AMAZON_TAG);
+      u.searchParams.set("ascsubtag", subId);
+      return u.toString();
     }
+    if (merchantSlug === "flipkart" && FLIPKART_AFFID) {
+      u.searchParams.set("affid", FLIPKART_AFFID);
+      u.searchParams.set("affExtParam1", subId);
+      return u.toString();
+    }
+    return cueWrap(rawUrl, subId);
   } catch {
     return rawUrl;
   }
